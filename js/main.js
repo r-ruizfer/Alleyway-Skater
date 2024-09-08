@@ -19,8 +19,12 @@ let skaterJumping = false;
 let skaterCrouching = false;
 let skaterWithBoard = [skater, skateboard];
 let obstArr = [];
-let obstFrequency = 10000;
+let obstFrequency = 7000;
 let obstIntervalId = null
+
+
+
+
 
 //* FUNCIONES GLOBALES DEL JUEGO
 function startGame() {
@@ -46,16 +50,34 @@ function startGame() {
 function gameLoop() {
   skateboard.fallDownSkate();
   skater.fallDown();
-  obstArr.forEach((eachTub) => {
-    eachTub.automaticMovement();
+  obstArr.forEach((eachObst) => {
+    eachObst.automaticMovement();
   });
   
 }
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min +1)) + min;
+}
 function addObst() {
-  
-
-  let newObstTop = new Obstaculo("Top");
-  obstArr.push(newObstTop);
+  randomNumber = 3 //getRandomNumber(1,3)
+  if(randomNumber === 3){
+    let newObstBot = new Obstaculo("tunel");
+    obstArr.push(newObstBot)
+    console.log("añadiendo tunel")}
+/*if(randomNumber === 1){
+  let newObstTop = new Obstaculo("Rail");
+  obstArr.push(newObstTop)
+  console.log("añadiendo rail")
+} else if(randomNumber === 2){
+  let newObstMid = new Obstaculo("Box");
+  obstArr.push(newObstMid)
+  console.log("añadiendo caja")
+}
+else if(randomNumber === 3){
+  let newObstBot = new Obstaculo("Tunel");
+  obstArr.push(newObstBot)
+  console.log("añadiendo tunel")
+} */
 }
 
 //* EVENT LISTENERS
