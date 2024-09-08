@@ -16,6 +16,11 @@ let skater = null;
 let skateboard = null;
 let gameIntervalId = null;
 let skaterJumping = false;
+let skaterCrouching = false;
+let skaterWithBoard = [skater, skateboard];
+let obstArr = [];
+let obstFrequency = 10000;
+let obstIntervalId = null
 
 //* FUNCIONES GLOBALES DEL JUEGO
 function startGame() {
@@ -33,9 +38,24 @@ function startGame() {
     console.log("intervalo funciona");
     gameLoop();
   }, Math.round(1000 / 60));
+  
+  obstIntervalId = setInterval(() => {
+    addObst();
+  }, obstFrequency);
 }
 function gameLoop() {
+  skateboard.fallDownSkate();
   skater.fallDown();
+  obstArr.forEach((eachTub) => {
+    eachTub.automaticMovement();
+  });
+  
+}
+function addObst() {
+  
+
+  let newObstTop = new Obstaculo("Top");
+  obstArr.push(newObstTop);
 }
 
 //* EVENT LISTENERS
@@ -45,6 +65,7 @@ window.addEventListener("keypress", (event) => {
     if (event.key === "z") {
       skaterJumping = true;
       skater.jump("short");
+      skateboard.jump();
 
       setTimeout(() => {
         skaterJumping = false;
@@ -62,12 +83,15 @@ window.addEventListener("keypress", (event) => {
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "c") {
-    skater.crouch();
+    if (skaterCrouching === false) {
+      skater.crouch();
+      skaterCrouching = true;
+    }
   }
 });
 window.addEventListener("keyup", (event) => {
-    if (event.key === "c") {
-      skater.uncrouch();
-    }
-  });
-  
+  if (event.key === "c") {
+    skaterCrouching = false;
+    skater.uncrouch();
+  }
+});

@@ -5,7 +5,8 @@ class Skateboard {
     this.y = 350;
     this.h = 20;
     this.w = 45;
-    this.jumpSpeed = 35;
+    this.jumpSpeed = 50;
+    this.fallSpeed = 5;
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -17,6 +18,10 @@ class Skateboard {
     this.node.style.position = "absolute";
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
+  }
+  fallDownSkate() {
+    if (this.y < 350) this.y += this.fallSpeed;
+    this.node.style.top = `${this.y}px`;
   }
   jump() {
     this.y -= this.jumpSpeed;

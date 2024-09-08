@@ -5,8 +5,8 @@ class Skater {
     this.y = 250;
     this.h = 100;
     this.w = 45;
-    this.fallSpeed = 2;
-    this.jumpSpeed = 35;
+    this.fallSpeed = 5;
+    this.jumpSpeed = 50;
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -36,21 +36,19 @@ class Skater {
 
   crouch() {
     this.node.src = "./images/Skater-crouching.png";
-    
-    this.h -= this.h / 2;
-    this.node.style.height = `${this.h}px`;
 
-    this.y += 50
+    this.h = 50;
+    this.node.style.height = `${this.h}px`;
+    this.y = 300;
     this.node.style.top = `${this.y}px`;
   }
-  uncrouch(){
+
+  uncrouch() {
     this.node.src = "./images/Skater.png";
 
-    this.h -= this.h * 2;
+    this.h = 100;
     this.node.style.height = `${this.h}px`;
-
-    this.y -= 50
+    this.y = 250;
     this.node.style.top = `${this.y}px`;
-
   }
 }

@@ -1,13 +1,18 @@
-class Tuberia {
-  constructor(positionY, type) {
+class Obstaculo {
+  constructor(type) {
     this.x = gameBoxNode.offsetWidth;
-    this.y = positionY;
-    this.w = 55;
-    this.h = 220;
+    this.y = 0;
+    this.w = 0;
+    this.h = 0;
     this.speed = 2;
 
     this.node = document.createElement("img");
-    this.node.src = "./images/obstacle_top.png";
+    if (type === "Top") {
+      this.y = 0;
+      this.w = 550;
+      this.h = 290;
+      this.node.src = "./images/obstacle-tunel.png";
+    }
 
     gameBoxNode.append(this.node);
 
