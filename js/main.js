@@ -67,14 +67,8 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function addObst() {
-  let randomNumber = 3; //getRandomNumber(1, 3);
-  if (randomNumber === 3) {
-    let newObstTop = new Obstaculo("tunel");
-    obstArr.push(newObstTop);
-    console.log("añadiendo tunel");
-    console.log(newObstTop.h);
-  }
-  /*if (randomNumber === 1) {
+  let randomNumber = getRandomNumber(1, 3);  
+  if (randomNumber === 1) {
     let newObstBot = new Obstaculo("Rail");
     obstArr.push(newObstBot);
     console.log("añadiendo rail");
@@ -86,7 +80,7 @@ function addObst() {
     let newObstTop = new Obstaculo("tunel");
     obstArr.push(newObstTop);
     console.log("añadiendo tunel");
-  }*/
+  }
 }
 function checkIfObstLeft() {
   if (obstArr.length === 0) {
@@ -149,8 +143,10 @@ window.addEventListener("keypress", (event) => {
     if (event.key === "z") {
       skater.jump("short");
       skateboard.jump();
+      
     } else if (event.key === "x") {
       skater.jump("long");
+      
     }
   }
 });

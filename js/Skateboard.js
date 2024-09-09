@@ -1,5 +1,5 @@
-let skateJumpMomentum = -40;
-let skateFallSpeed = 5;
+let skateJumpMomentum = jumpMomentum;
+let skateFallSpeed = fallSpeed;
 
 class Skateboard {
   constructor() {
@@ -10,7 +10,6 @@ class Skateboard {
     this.w = 45;
     this.jumpSpeed = 0;
     this.skateJumping = false;
-    
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -27,21 +26,21 @@ class Skateboard {
     if (this.skateJumping === true) {
       this.jumpSpeed += skateFallSpeed;
       this.y += this.jumpSpeed;
-    
-    this.node.style.top = `${this.y}px`;
+
+      this.node.style.top = `${this.y}px`;
     }
-    if (this.y>=350){
-      this.y = 350
-      this.jumpSpeed=0
-      this.skateJumping = false
+    if (this.y >= 350) {
+      this.y = 350;
+      this.jumpSpeed = 0;
+      this.skateJumping = false;
     }
-    
   }
   jump() {
     if (this.skateJumping === false) {
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
       this.node.style.top = `${this.y}px`;
+      
+    }
   }
-}
 }

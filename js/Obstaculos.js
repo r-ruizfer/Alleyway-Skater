@@ -4,12 +4,12 @@ class Obstaculo {
     this.y = 0;
     this.w = 0;
     this.h = 0;
-    this.speed = 5;
+    this.speed = 7;
 
     this.node = document.createElement("img");
     if (type === "Rail") {
       this.y = 330;
-      this.w = 550;
+      this.w = 100;
       this.h = 50;
       this.node.src = "./images/obstacle-rail.png";
     } else if (type === "Box") {

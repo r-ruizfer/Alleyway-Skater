@@ -1,5 +1,5 @@
-let jumpMomentum = -40;
-let fallSpeed = 5;
+let jumpMomentum = -15;
+let fallSpeed = 1;
 
 class Skater {
   constructor() {
@@ -31,7 +31,9 @@ class Skater {
       this.y += this.jumpSpeed;
       this.node.style.top = `${this.y}px`;
     }
-    if (this.y >= 250) {
+    if (this.skaterCrouching === true) {
+      this.y = 300;
+    } else if (this.y >= 250) {
       this.y = 250;
       this.jumpSpeed = 0;
       this.skaterJumping = false;
@@ -44,10 +46,12 @@ class Skater {
         this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
         this.node.style.top = `${this.y}px`;
+        
       } else if (type === "long") {
-        this.jumpSpeed = jumpMomentum * 1.2;
+        this.jumpSpeed = jumpMomentum * 1.5;
         this.skaterJumping = true;
         this.node.style.top = `${this.y}px`;
+        
       }
     }
   }
