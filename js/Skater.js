@@ -1,12 +1,18 @@
+let jumpMomentum = -40;
+let fallSpeed = 5;
+
 class Skater {
   constructor() {
-    // .todos los pollitos se crearán con estos valores
     this.x = 70;
-    this.y = 250;
-    this.h = 100;
+    this.y = 220;
+    this.h = 135;
     this.w = 45;
-    this.fallSpeed = 5;
-    this.jumpSpeed = 50;
+
+    this.jumpSpeed = 0;
+    this.speed = 5;
+
+    this.skaterJumping = false;
+    this.skaterCrouching = false;
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -20,35 +26,60 @@ class Skater {
     this.node.style.left = `${this.x}px`;
   }
   fallDown() {
-    if (this.y < 250) this.y += this.fallSpeed;
-    this.node.style.top = `${this.y}px`;
+    if (this.skaterJumping) {
+      this.jumpSpeed += fallSpeed;
+      this.y += this.jumpSpeed;
+
+      this.node.style.top = `${this.y}px`;
+    }
+    if (this.y >= 220) {
+      this.y = 220;
+      this.jumpSpeed = 0;
+      this.skaterJumping = false;
+    }
   }
 
   jump(type) {
-    if (type === "short") {
-      this.y -= this.jumpSpeed;
-      this.node.style.top = `${this.y}px`;
-    } else if (type === "long") {
-      this.y -= this.jumpSpeed * 3;
-      this.node.style.top = `${this.y}px`;
+    if (this.skaterJumping === false) {
+      if (type === "short") {
+        this.jumpSpeed = jumpMomentum;
+        this.skaterJumping = true;
+        this.node.style.top = `${this.y}px`;
+      } else if (type === "long") {
+        this.jumpSpeed = jumpMomentum * 1.2;
+        this.skaterJumping = true;
+        this.node.style.top = `${this.y}px`;
+      }
     }
   }
 
   crouch() {
-    this.node.src = "./images/Skater-crouching.png";
+    if (this.skaterCrouching === false) {
+      this.node.src = "./images/Skater-crouching.png";
 
-    this.h = 50;
-    this.node.style.height = `${this.h}px`;
-    this.y = 300;
-    this.node.style.top = `${this.y}px`;
+      this.h = 50;
+      this.node.style.height = `${this.h}px`;
+      this.y = 300;
+      this.node.style.top = `${this.y}px`;
+      this.skaterCrouching = true;
+      
+    }
   }
 
   uncrouch() {
-    this.node.src = "./images/Skater.png";
+    if (this.skaterCrouching === true) {
+      this.node.src = "./images/Skater.png";
 
-    this.h = 100;
-    this.node.style.height = `${this.h}px`;
-    this.y = 250;
-    this.node.style.top = `${this.y}px`;
+      this.h = 135;
+      this.node.style.height = `${this.h}px`;
+      this.y = 220;
+      this.node.style.top = `${this.y}px`;
+      this.skaterCrouching = false
+    }
+  }
+  automaticMovement() {
+    this.node.src = "./images/skater-crashed.png"
+    this.x -= this.speed;
+    this.node.style.left = `${this.x}px`;
   }
 }

@@ -7,26 +7,31 @@ const gameOverScreenNode = document.querySelector("#game-over-screen");
 
 // botones
 const startBtnNode = document.querySelector("#start-btn");
+const restartBtnNode = document.querySelector("#restart-btn");
 
 // game box
 const gameBoxNode = document.querySelector("#game-box");
 
 //* VARIABLES GLOBALES DEL JUEGO
+
+// Game Objects
 let skater = null;
 let skateboard = null;
-let gameIntervalId = null;
-let skaterJumping = false;
-let skaterCrouching = false;
 let skaterWithBoard = [skater, skateboard];
 let obstArr = [];
 let obstFrequency = 7000;
-let obstIntervalId = null
+let canItJump = true;
+let canSkaterCrouch = true;
 
+// Game Intervals
+let gameIntervalId = null;
+let obstIntervalId = null;
 
-
-
+//score
+let score = 0;
 
 //* FUNCIONES GLOBALES DEL JUEGO
+
 function startGame() {
   console.log("iniciando juego");
 
@@ -42,7 +47,7 @@ function startGame() {
     console.log("intervalo funciona");
     gameLoop();
   }, Math.round(1000 / 60));
-  
+
   obstIntervalId = setInterval(() => {
     addObst();
   }, obstFrequency);
@@ -53,67 +58,110 @@ function gameLoop() {
   obstArr.forEach((eachObst) => {
     eachObst.automaticMovement();
   });
-  
+  checkIfObstLeft();
+  checkSkaterObstacleColision();
 }
 function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min +1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function addObst() {
-  randomNumber = 3 //getRandomNumber(1,3)
-  if(randomNumber === 3){
-    let newObstBot = new Obstaculo("tunel");
-    obstArr.push(newObstBot)
-    console.log("añadiendo tunel")}
-/*if(randomNumber === 1){
-  let newObstTop = new Obstaculo("Rail");
-  obstArr.push(newObstTop)
-  console.log("añadiendo rail")
-} else if(randomNumber === 2){
-  let newObstMid = new Obstaculo("Box");
-  obstArr.push(newObstMid)
-  console.log("añadiendo caja")
+  let randomNumber = 3; //getRandomNumber(1, 3);
+  if (randomNumber === 3) {
+    let newObstTop = new Obstaculo("tunel");
+    obstArr.push(newObstTop);
+    console.log("añadiendo tunel");
+    console.log(newObstTop.h)
+  }
+  /*if (randomNumber === 1) {
+    let newObstBot = new Obstaculo("Rail");
+    obstArr.push(newObstBot);
+    console.log("añadiendo rail");
+  } else if (randomNumber === 2) {
+    let newObstMid = new Obstaculo("Box");
+    obstArr.push(newObstMid);
+    console.log("añadiendo caja");
+  } else if (randomNumber === 3) {
+    let newObstTop = new Obstaculo("tunel");
+    obstArr.push(newObstTop);
+    console.log("añadiendo tunel");
+  }*/
 }
-else if(randomNumber === 3){
-  let newObstBot = new Obstaculo("Tunel");
-  obstArr.push(newObstBot)
-  console.log("añadiendo tunel")
-} */
+function checkIfObstLeft() {
+  if (obstArr.length === 0) {
+    return;
+  }
+  if (obstArr[0].x + obstArr[0].w <= 0) {
+    obstArr[0].node.remove();
+    obstArr.shift();
+    score += 100;
+    console.log(score);
+  }
 }
+function checkSkaterObstacleColision() {
+  obstArr.forEach((eachObst) => {
+    const colisionX =
+      skater.x < eachObst.x + eachObst.w && skater.x + skater.w > eachObst.x;
+    const colisionY =
+      skater.y < eachObst.y + eachObst.h && skater.y + skater.h > eachObst.y;
 
+    
+     if (colisionX && colisionY) {
+      disableBtns();
+      skater.automaticMovement();
+      if (skater.x + skater.w <= 0) {
+        gameOver();
+      }
+      console.log("skater crashed!");
+    }
+  });
+}
+function gameOver() {
+  skater = null;
+  skateboard = null;
+  obstArr = [];
+  clearInterval(gameIntervalId);
+  clearInterval(obstIntervalId);
+  gameScreenNode.style.display = "none";
+  gameOverScreenNode.style.display = "flex";
+}
+function disableBtns() {
+  canItJump = false;
+  canSkaterCrouch = false;
+}
+function restartGame() {
+  skater = null;
+  skateboard = null;
+  obstArr = [];
+  clearInterval(gameIntervalId);
+  clearInterval(obstIntervalId);
+  gameOverScreenNode.style.display = "none";
+  splashScreenNode.style.display = "flex";
+}
 //* EVENT LISTENERS
 startBtnNode.addEventListener("click", startGame);
+restartBtnNode.addEventListener("click", restartGame);
+
 window.addEventListener("keypress", (event) => {
-  if (!skaterJumping) {
+  if (canItJump === true) {
     if (event.key === "z") {
-      skaterJumping = true;
       skater.jump("short");
       skateboard.jump();
-
-      setTimeout(() => {
-        skaterJumping = false;
-      }, 500);
     } else if (event.key === "x") {
-      skaterJumping = true;
       skater.jump("long");
-
-      setTimeout(() => {
-        skaterJumping = false;
-      }, 1000);
     }
   }
 });
 
 window.addEventListener("keydown", (event) => {
-  if (event.key === "c") {
-    if (skaterCrouching === false) {
+  if (canSkaterCrouch === true) {
+    if (event.key === "c") {
       skater.crouch();
-      skaterCrouching = true;
+      
     }
   }
 });
 window.addEventListener("keyup", (event) => {
   if (event.key === "c") {
-    skaterCrouching = false;
     skater.uncrouch();
   }
 });

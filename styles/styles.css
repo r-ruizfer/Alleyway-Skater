@@ -4,7 +4,7 @@ body {
   background-image: url("../images/NOISY-NINJA.png");
   background-position: top;
 }
-h1{
+h1 {
   color: gold;
   font-size: 50px;
 }
@@ -16,7 +16,14 @@ h1{
   margin-top: 40px;
   border-radius: 10px;
 }
-
+#restart-btn {
+  background-color: purple;
+  color: rgb(255, 230, 0);
+  padding: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  border-radius: 10px;
+}
 
 .container {
   display: flex;
