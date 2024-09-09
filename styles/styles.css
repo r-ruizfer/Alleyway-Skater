@@ -8,6 +8,12 @@ h1 {
   color: gold;
   font-size: 50px;
 }
+#Controles {
+  background-color: greenyellow;
+  color: darkcyan;
+  font-size: 20px;
+  text-align: center;
+}
 #start-btn {
   background-color: purple;
   color: rgb(255, 230, 0);
