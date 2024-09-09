@@ -4,15 +4,15 @@ class Obstaculo {
     this.y = 0;
     this.w = 0;
     this.h = 0;
-    this.speed = 7;
+    
 
     this.node = document.createElement("img");
-    if (type === "Rail") {
+    if (type === "manhole") {
       this.y = 330;
-      this.w = 100;
+      this.w = 75;
       this.h = 50;
-      this.node.src = "./images/obstacle-rail.png";
-    } else if (type === "Box") {
+      this.node.src = "./images/obstacle-manhole.png";
+    } else if (type === "box") {
       this.y = 200;
       this.w = 100;
       this.h = 100;
@@ -34,7 +34,7 @@ class Obstaculo {
   }
 
   automaticMovement() {
-    this.x -= this.speed;
+    this.x -= gameSpeed;
     this.node.style.left = `${this.x}px`;
   }
 }

@@ -9,10 +9,10 @@ class Skater {
     this.w = 45;
 
     this.jumpSpeed = 0;
-    this.speed = 5;
 
     this.skaterJumping = false;
     this.skaterCrouching = false;
+    
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -26,19 +26,24 @@ class Skater {
     this.node.style.left = `${this.x}px`;
   }
   fallDown() {
-    if (this.skaterJumping) {
-      this.jumpSpeed += fallSpeed;
-      this.y += this.jumpSpeed;
-      this.node.style.top = `${this.y}px`;
-    }
-    if (this.skaterCrouching === true) {
-      this.y = 300;
-    } else if (this.y >= 250) {
-      this.y = 250;
-      this.jumpSpeed = 0;
-      this.skaterJumping = false;
+    if (skaterCrashed === false) {
+      if (this.skaterJumping) {
+        this.jumpSpeed += fallSpeed;
+        this.y += this.jumpSpeed;
+        this.node.style.top = `${this.y}px`;
+      }
+      if (this.skaterCrouching === true) {
+        this.y = 300;
+      } else if (this.y >= 250) {
+        this.y = 250;
+        this.jumpSpeed = 0;
+        this.skaterJumping = false;
+      }
     }
   }
+
+  
+  
 
   jump(type) {
     if (this.skaterJumping === false) {
@@ -46,12 +51,10 @@ class Skater {
         this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
         this.node.style.top = `${this.y}px`;
-        
       } else if (type === "long") {
         this.jumpSpeed = jumpMomentum * 1.5;
         this.skaterJumping = true;
         this.node.style.top = `${this.y}px`;
-        
       }
     }
   }
@@ -81,7 +84,7 @@ class Skater {
   }
   automaticMovement() {
     this.node.src = "./images/skater-crashed.png";
-    this.x -= this.speed;
+    this.x -= gameSpeed;
     this.node.style.left = `${this.x}px`;
   }
 }

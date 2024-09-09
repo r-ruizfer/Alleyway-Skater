@@ -35,12 +35,12 @@ class Skateboard {
       this.skateJumping = false;
     }
   }
+  
   jump() {
     if (this.skateJumping === false) {
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
       this.node.style.top = `${this.y}px`;
-      
     }
   }
 }

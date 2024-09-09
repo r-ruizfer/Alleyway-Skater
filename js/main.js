@@ -22,6 +22,9 @@ let obstArr = [];
 let obstFrequency = 7000;
 let canItJump = true;
 let canSkaterCrouch = true;
+let skaterCrashed = false;
+let gameSpeed = 7;
+let = false;
 
 // Game Intervals
 let gameIntervalId = null;
@@ -43,6 +46,7 @@ function startGame() {
   skateboard = new Skateboard();
   canItJump = true;
   canSkaterCrouch = true;
+  skaterCrashed = false;
 
   // 3. intervalo 60 fps
   gameIntervalId = setInterval(() => {
@@ -55,25 +59,25 @@ function startGame() {
   }, obstFrequency);
 }
 function gameLoop() {
-  skateboard.fallDownSkate();
-  skater.fallDown();
   obstArr.forEach((eachObst) => {
     eachObst.automaticMovement();
   });
   checkIfObstLeft();
   checkSkaterObstacleColision();
+  skateboard.fallDownSkate();
+  skater.fallDown();
 }
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function addObst() {
-  let randomNumber = getRandomNumber(1, 3);  
+  let randomNumber = getRandomNumber(1, 3);
   if (randomNumber === 1) {
-    let newObstBot = new Obstaculo("Rail");
+    let newObstBot = new Obstaculo("manhole");
     obstArr.push(newObstBot);
-    console.log("añadiendo rail");
+    console.log("añadiendo manhole");
   } else if (randomNumber === 2) {
-    let newObstMid = new Obstaculo("Box");
+    let newObstMid = new Obstaculo("box");
     obstArr.push(newObstMid);
     console.log("añadiendo caja");
   } else if (randomNumber === 3) {
@@ -101,6 +105,7 @@ function checkSkaterObstacleColision() {
       skater.y < eachObst.y + eachObst.h &&
       skater.y + skater.h > eachObst.y
     ) {
+      skaterCrashed = true;
       disableBtns();
       skater.automaticMovement();
       if (skater.x + skater.w <= 0) {
@@ -143,10 +148,8 @@ window.addEventListener("keypress", (event) => {
     if (event.key === "z") {
       skater.jump("short");
       skateboard.jump();
-      
     } else if (event.key === "x") {
       skater.jump("long");
-      
     }
   }
 });
