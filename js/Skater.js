@@ -12,7 +12,6 @@ class Skater {
 
     this.skaterJumping = false;
     this.skaterCrouching = false;
-    
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -41,9 +40,6 @@ class Skater {
       }
     }
   }
-
-  
-  
 
   jump(type) {
     if (this.skaterJumping === false) {

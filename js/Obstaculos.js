@@ -4,7 +4,6 @@ class Obstaculo {
     this.y = 0;
     this.w = 0;
     this.h = 0;
-    
 
     this.node = document.createElement("img");
     if (type === "manhole") {

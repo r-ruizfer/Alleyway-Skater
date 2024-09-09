@@ -35,12 +35,17 @@ class Skateboard {
       this.skateJumping = false;
     }
   }
-  
+
   jump() {
     if (this.skateJumping === false) {
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
       this.node.style.top = `${this.y}px`;
     }
+  }
+  lostSkate(){
+    this.node.src = "./images/Skateboard-lost.png"
+    this.x -= gameSpeed;
+    this.node.style.left = `${this.x}px`;
   }
 }
