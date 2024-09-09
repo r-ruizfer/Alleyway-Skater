@@ -4,8 +4,8 @@ let fallSpeed = 5;
 class Skater {
   constructor() {
     this.x = 70;
-    this.y = 220;
-    this.h = 135;
+    this.y = 250;
+    this.h = 100;
     this.w = 45;
 
     this.jumpSpeed = 0;
@@ -29,11 +29,10 @@ class Skater {
     if (this.skaterJumping) {
       this.jumpSpeed += fallSpeed;
       this.y += this.jumpSpeed;
-
       this.node.style.top = `${this.y}px`;
     }
-    if (this.y >= 220) {
-      this.y = 220;
+    if (this.y >= 250) {
+      this.y = 250;
       this.jumpSpeed = 0;
       this.skaterJumping = false;
     }
@@ -62,7 +61,6 @@ class Skater {
       this.y = 300;
       this.node.style.top = `${this.y}px`;
       this.skaterCrouching = true;
-      
     }
   }
 
@@ -70,15 +68,15 @@ class Skater {
     if (this.skaterCrouching === true) {
       this.node.src = "./images/Skater.png";
 
-      this.h = 135;
+      this.h = 100;
       this.node.style.height = `${this.h}px`;
-      this.y = 220;
+      this.y = 250;
       this.node.style.top = `${this.y}px`;
-      this.skaterCrouching = false
+      this.skaterCrouching = false;
     }
   }
   automaticMovement() {
-    this.node.src = "./images/skater-crashed.png"
+    this.node.src = "./images/skater-crashed.png";
     this.x -= this.speed;
     this.node.style.left = `${this.x}px`;
   }

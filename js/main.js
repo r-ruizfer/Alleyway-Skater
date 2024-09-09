@@ -41,6 +41,8 @@ function startGame() {
   // 2. añadir jugador
   skater = new Skater();
   skateboard = new Skateboard();
+  canItJump = true;
+  canSkaterCrouch = true;
 
   // 3. intervalo 60 fps
   gameIntervalId = setInterval(() => {
@@ -70,7 +72,7 @@ function addObst() {
     let newObstTop = new Obstaculo("tunel");
     obstArr.push(newObstTop);
     console.log("añadiendo tunel");
-    console.log(newObstTop.h)
+    console.log(newObstTop.h);
   }
   /*if (randomNumber === 1) {
     let newObstBot = new Obstaculo("Rail");
@@ -99,13 +101,12 @@ function checkIfObstLeft() {
 }
 function checkSkaterObstacleColision() {
   obstArr.forEach((eachObst) => {
-    const colisionX =
-      skater.x < eachObst.x + eachObst.w && skater.x + skater.w > eachObst.x;
-    const colisionY =
-      skater.y < eachObst.y + eachObst.h && skater.y + skater.h > eachObst.y;
-
-    
-     if (colisionX && colisionY) {
+    if (
+      skater.x < eachObst.x + eachObst.w &&
+      skater.x + skater.w > eachObst.x &&
+      skater.y < eachObst.y + eachObst.h &&
+      skater.y + skater.h > eachObst.y
+    ) {
       disableBtns();
       skater.automaticMovement();
       if (skater.x + skater.w <= 0) {
@@ -129,6 +130,8 @@ function disableBtns() {
   canSkaterCrouch = false;
 }
 function restartGame() {
+  gameBoxNode.innerHTML = "";
+
   skater = null;
   skateboard = null;
   obstArr = [];
@@ -156,7 +159,6 @@ window.addEventListener("keydown", (event) => {
   if (canSkaterCrouch === true) {
     if (event.key === "c") {
       skater.crouch();
-      
     }
   }
 });

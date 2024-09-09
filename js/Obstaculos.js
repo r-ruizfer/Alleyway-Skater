@@ -20,7 +20,7 @@ class Obstaculo {
     } else if (type === "tunel") {
       this.y = 0;
       this.w = 550;
-      this.h = 240;
+      this.h = 280;
       this.node.src = "./images/obstacle-tunel.png";
     }
 
