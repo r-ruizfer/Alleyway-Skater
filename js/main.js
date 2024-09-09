@@ -103,7 +103,11 @@ function checkSkaterObstacleColision() {
       skater.x < eachObst.x + eachObst.w &&
       skater.x + skater.w > eachObst.x &&
       skater.y < eachObst.y + eachObst.h &&
-      skater.y + skater.h > eachObst.y
+      skater.y + skater.h > eachObst.y ||
+      skateboard.x < eachObst.x + eachObst.w &&
+      skateboard.x + skateboard.w > eachObst.x &&
+      skateboard.y < eachObst.y + eachObst.h &&
+      skateboard.y + skateboard.h > eachObst.y 
     ) {
       skaterCrashed = true;
       disableBtns();
