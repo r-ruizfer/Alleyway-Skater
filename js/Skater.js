@@ -43,16 +43,17 @@ class Skater {
   }
 
   startGrinding() {
-    skateCrashed = false;
+    skaterCrashed = false;
     this.skaterGrinding = true;
     this.jumpSpeed = 0;
     this.skaterJumping = false;
-    this.y -= 10;
+    this.y = 195;
     this.node.style.top = `${this.y}px`;
   }
 
   stopGrinding() {
     this.skaterGrinding = false;
+    
   }
 
   jump(type) {

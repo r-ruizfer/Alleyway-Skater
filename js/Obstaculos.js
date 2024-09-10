@@ -12,7 +12,7 @@ class Obstaculo {
       this.h = 50;
       this.node.src = "./images/obstacle-manhole.png";
     } else if (type === "box") {
-      this.y = 200;
+      this.y = 220;
       this.w = 100;
       this.h = 100;
       this.node.src = "./images/obstacle-box.png";

@@ -1,9 +1,36 @@
 @font-face {
-  font-family: 'Retro-Gaming'; 
-  src: url('fonts/Retro-Gaming.woff') format('woff'),  
-  url('fonts/Retro-Gaming.ttf') format('truetype'); 
-  font-weight: normal; 
-  font-style: normal;  
+  font-family: "Retro-Gaming";
+  src: url("fonts/Retro-Gaming.woff") format("woff"),
+    url("fonts/Retro-Gaming.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.blinking {
+  animation: blink 0.5s infinite;
+}
+#SpeedUp {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-family: "Retro-Gaming";
+  font-size: 30px;
+  color: white;
+  display: none;
+  padding: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  border-radius: 10px;
 }
 body {
   margin: 0;
@@ -12,21 +39,19 @@ body {
   background-position: top;
 }
 h1 {
-  font-family:'Retro-Gaming';
+  font-family: "Retro-Gaming";
   color: gold;
   font-size: 50px;
 }
 #Controles {
-  font-family:'Retro-Gaming';
+  font-family: "Retro-Gaming";
   background-color: greenyellow;
   color: darkcyan;
   font-size: 20px;
   text-align: center;
 }
-#start-btn,
-#score,
-#hiScore {
-  font-family:'Retro-Gaming';
+#start-btn {
+  font-family: "Retro-Gaming";
   background-color: greenyellow;
   color: darkcyan;
   padding: 20px;
@@ -34,10 +59,31 @@ h1 {
   margin-top: 40px;
   border-radius: 10px;
 }
+#Score{
+  font-family: "Retro-Gaming";
+  background-color: greenyellow;
+  color: darkcyan;
+  padding: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  border-radius: 10px;
+  transition: color 2s ease, background-color 2s ease;
+  
+}
+#HiScore{
+  font-family: "Retro-Gaming";
+  background-color: greenyellow;
+  color: darkcyan;
+  padding: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  border-radius: 10px;
+  transition: color 2s ease, background-color 2s ease;
+}
 #restart-btn,
 #finalScore,
 #finalHiScore {
-  font-family:'Retro-Gaming';
+  font-family: "Retro-Gaming";
   background-color: pink;
   color: darkred;
   padding: 20px;

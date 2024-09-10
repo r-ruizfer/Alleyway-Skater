@@ -16,16 +16,18 @@
         <p>[Z] short jump,[X] to long jump, [C] to crouch</p>
       </div>
       <a href=""></a>
-      <img id="dancing-guy" src="images/beat.gif" height="500px" />
+      <img id="dancing-guy" src="images/TornadoSpin.gif" height="500px" />
 
       <button id="start-btn">Start!</button>
     </div>
 
     <!-- PANTALLA DE JUEGO -->
     <div id="game-screen" class="container">
-      <div id="game-box"></div>
-      <div id="score">Score: 0</div>
-      <div id="hiScore">Hi-Score: 0</div>
+      <div id="game-box">
+        <div id="SpeedUp" style="display: none">SPEED UP!!</div>
+      </div>
+      <div id="Score" >Score: 0</div>
+      <div id="HiScore">Hi-Score: 0</div>
     </div>
 
     <!-- PANTALLA FINAL -->
@@ -40,5 +42,6 @@
     <script src="./js/Skater.js"></script>
     <script src="./js/Obstaculos.js"></script>
     <script src="./js/Skateboard.js"></script>
+    <script src="./js/rail.js"></script>
   </body>
 </html>

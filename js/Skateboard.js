@@ -44,12 +44,13 @@ class Skateboard {
     this.skateboardGrinding = true;
     this.jumpSpeed = 0;
     this.skateJumping = false;
-    this.y -= 10;
+    this.y = 290;
     this.node.style.top = `${this.y}px`;
   }
 
   stopGrinding() {
     this.skateboardGrinding = false;
+    
   }
 
   jump() {
