@@ -12,6 +12,7 @@ class Skater {
 
     this.skaterJumping = false;
     this.skaterCrouching = false;
+    this.skaterGrinding = false;
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -25,7 +26,7 @@ class Skater {
     this.node.style.left = `${this.x}px`;
   }
   fallDown() {
-    if (skaterCrashed === false) {
+    if (skaterCrashed === false && this.skaterGrinding === false) {
       if (this.skaterJumping) {
         this.jumpSpeed += fallSpeed;
         this.y += this.jumpSpeed;
@@ -39,6 +40,19 @@ class Skater {
         this.skaterJumping = false;
       }
     }
+  }
+
+  startGrinding() {
+    skateCrashed = false;
+    this.skaterGrinding = true;
+    this.jumpSpeed = 0;
+    this.skaterJumping = false;
+    this.y -= 10;
+    this.node.style.top = `${this.y}px`;
+  }
+
+  stopGrinding() {
+    this.skaterGrinding = false;
   }
 
   jump(type) {
@@ -56,7 +70,7 @@ class Skater {
   }
 
   crouch() {
-    if (this.skaterCrouching === false) {
+    if (this.skaterCrouching === false && this.skaterJumping === false) {
       this.node.src = "./images/Skater-crouching.png";
 
       this.h = 50;
@@ -79,8 +93,10 @@ class Skater {
     }
   }
   automaticMovement() {
-    this.node.src = "./images/skater-crashed.png";
-    this.x -= gameSpeed;
-    this.node.style.left = `${this.x}px`;
+    if (skaterCrashed === true) {
+      this.node.src = "./images/skater-crashed.png";
+      this.x -= gameSpeed;
+      this.node.style.left = `${this.x}px`;
+    }
   }
 }

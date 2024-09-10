@@ -21,6 +21,11 @@ class Obstaculo {
       this.w = 550;
       this.h = 280;
       this.node.src = "./images/obstacle-tunel.png";
+    } else if (type === "rail") {
+      this.y = 310;
+      this.w = 500;
+      this.h = 75;
+      this.node.src = "./images/obstacle-rail.png";
     }
 
     gameBoxNode.append(this.node);

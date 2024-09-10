@@ -9,34 +9,30 @@
   </head>
   <body>
     <!-- PANTALLA DE INICIO -->
-    <div id="splash-screen" class="container">   
+    <div id="splash-screen" class="container">
       <h1>ALLEYWAY SKATER</h1>
-      <div id = "Controles">
-        <h2>CONTROLES</h2>
-      <p >Z short jump, X to long jump, C to crouch</p>
-    </div>
+      <div id="Controles">
+        <h2>CONTROLS:</h2>
+        <p>[Z] short jump,[X] to long jump, [C] to crouch</p>
+      </div>
       <a href=""></a>
-        <img
-          id="dancing-guy"
-          src="images/beat.gif"
-          height="500px"
-          
-        />
-      </a>
+      <img id="dancing-guy" src="images/beat.gif" height="500px" />
+
       <button id="start-btn">Start!</button>
     </div>
 
     <!-- PANTALLA DE JUEGO -->
     <div id="game-screen" class="container">
-      <!-- Elementos del juego como puntuación, vidas, etc deberia ir aqui (dentro del game-screen pero fuera del game-box) -->
-      <div id="game-box">
-        <!-- Los elementos del juego serán añadidos desde JS con manipulación de DOM -->
-      </div>
+      <div id="game-box"></div>
+      <div id="score">Score: 0</div>
+      <div id="hiScore">Hi-Score: 0</div>
     </div>
 
     <!-- PANTALLA FINAL -->
     <div id="game-over-screen" class="container">
       <img src="./images/Game-Over.png" width="500" alt="GAME OVER" />
+      <div id="finalScore">Score: 0</div>
+      <div id="finalHiScore">Hi-Score: 0</div>
       <button id="restart-btn">Restart!</button>
     </div>
 

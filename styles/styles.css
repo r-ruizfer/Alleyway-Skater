@@ -1,30 +1,45 @@
+@font-face {
+  font-family: 'Retro-Gaming'; 
+  src: url('fonts/Retro-Gaming.woff') format('woff'),  
+  url('fonts/Retro-Gaming.ttf') format('truetype'); 
+  font-weight: normal; 
+  font-style: normal;  
+}
 body {
   margin: 0;
   background-color: lightgray;
-  background-image: url("../images/NOISY-NINJA.png");
+  background-image: url("../images/Background.webp");
   background-position: top;
 }
 h1 {
+  font-family:'Retro-Gaming';
   color: gold;
   font-size: 50px;
 }
 #Controles {
+  font-family:'Retro-Gaming';
   background-color: greenyellow;
   color: darkcyan;
   font-size: 20px;
   text-align: center;
 }
-#start-btn {
-  background-color: purple;
-  color: rgb(255, 230, 0);
+#start-btn,
+#score,
+#hiScore {
+  font-family:'Retro-Gaming';
+  background-color: greenyellow;
+  color: darkcyan;
   padding: 20px;
   font-size: 20px;
   margin-top: 40px;
   border-radius: 10px;
 }
-#restart-btn {
-  background-color: purple;
-  color: rgb(255, 230, 0);
+#restart-btn,
+#finalScore,
+#finalHiScore {
+  font-family:'Retro-Gaming';
+  background-color: pink;
+  color: darkred;
   padding: 20px;
   font-size: 20px;
   margin-top: 40px;
@@ -44,16 +59,16 @@ h1 {
   width: 600px;
   height: 400px;
 
-  position: relative; /* permite posicionar los elementos de forma absoluta dentro del game-box */
-  overflow: hidden; /* previene que los elementos salgan visualmente del game-box */
-  user-select: none; /* previene que los elementos del game-box sean resaltados al hacer click */
+  position: relative;
+  overflow: hidden;
+  user-select: none;
   background-image: url("../images/bg.png");
   background-position: center;
   background-size: cover;
 }
 
 #game-box * {
-  pointer-events: none; /* previene que todos los elementos del game-box sean arrastrados al clickar sobre ellos */
+  pointer-events: none;
 }
 
 #game-screen,

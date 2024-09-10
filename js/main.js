@@ -23,6 +23,7 @@ let obstFrequency = 7000;
 let canItJump = true;
 let canSkaterCrouch = true;
 let skaterCrashed = false;
+let skateboardCrashed = false;
 let gameSpeed = 7;
 let = false;
 
@@ -32,6 +33,7 @@ let obstIntervalId = null;
 
 //score
 let score = 0;
+let hiScore = 0;
 
 //* FUNCIONES GLOBALES DEL JUEGO
 
@@ -41,12 +43,15 @@ function startGame() {
   // 1. cambiar pantallas.
   splashScreenNode.style.display = "none";
   gameScreenNode.style.display = "flex";
-  // 2. añadir jugador
+
   skater = new Skater();
   skateboard = new Skateboard();
   canItJump = true;
   canSkaterCrouch = true;
   skaterCrashed = false;
+  skateboardCrashed = false;
+  score = 0;
+  document.getElementById("score").innerText = "Score: " + score;
 
   // 3. intervalo 60 fps
   gameIntervalId = setInterval(() => {
@@ -66,6 +71,7 @@ function gameLoop() {
   checkSkaterObstacleColision();
   skateboard.fallDownSkate();
   skater.fallDown();
+  levelUp();
 }
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -84,6 +90,10 @@ function addObst() {
     let newObstTop = new Obstaculo("tunel");
     obstArr.push(newObstTop);
     console.log("añadiendo tunel");
+  } else if (randomNumber === 4) {
+    let newObstBot2 = new Obstaculo("rail");
+    obstArr.push(newObstBot2);
+    console.log("añadiendo rail");
   }
 }
 function checkIfObstLeft() {
@@ -94,6 +104,8 @@ function checkIfObstLeft() {
     obstArr[0].node.remove();
     obstArr.shift();
     score += 100;
+    document.getElementById("score").innerText = "Score: " + score;
+    document.getElementById("finalScore").innerText = "Score: " + score;
     console.log(score);
   }
 }
@@ -105,22 +117,35 @@ function checkSkaterObstacleColision() {
       skater.y < eachObst.y + eachObst.h &&
       skater.y + skater.h > eachObst.y
     ) {
-      skaterCrashed = true;
-      disableBtns();
-      skater.automaticMovement();
-      if (skater.x + skater.w <= 0) {
-        gameOver();
+      if (eachObst.type === "rail") {
+        skaterCrashed = false;
+        skater.startGrinding();
+      } else {
+        skaterCrashed = true;
+        disableBtns();
+        skater.automaticMovement();
+        if (skater.x + skater.w <= 0) {
+          gameOver();
+        }
       }
       console.log("skater crashed!");
-    } else if (skateboard.x < eachObst.x + eachObst.w &&
+    } else if (
+      skateboard.x < eachObst.x + eachObst.w &&
       skateboard.x + skateboard.w > eachObst.x &&
       skateboard.y < eachObst.y + eachObst.h &&
-      skateboard.y + skateboard.h > eachObst.y){
-        skateboard.lostSkate()
+      skateboard.y + skateboard.h > eachObst.y
+    ) {
+      if (eachObst.type === "rail") {
+        skateboardCrashed = false;
+        skateboard.startGrinding();
+      } else {
+        skateboardCrashed = true;
+        skateboard.lostSkate();
         if (skateboard.x + skateboard.w <= 0) {
           gameOver();
         }
       }
+    }
   });
 }
 function gameOver() {
@@ -131,6 +156,12 @@ function gameOver() {
   clearInterval(obstIntervalId);
   gameScreenNode.style.display = "none";
   gameOverScreenNode.style.display = "flex";
+  if (hiScore < score) {
+    hiScore = score;
+    document.getElementById("hiScore").innerText = "Hi-Score: " + hiScore;
+    
+    document.getElementById("finalHiScore").innerText = "Hi-Score: " + hiScore;
+  }
 }
 function disableBtns() {
   canItJump = false;
@@ -146,6 +177,12 @@ function restartGame() {
   clearInterval(obstIntervalId);
   gameOverScreenNode.style.display = "none";
   splashScreenNode.style.display = "flex";
+}
+function levelUp() {
+  if (score >= 700) {
+    obstFrequency = 9000;
+    gameSpeed = 9;
+  }
 }
 //* EVENT LISTENERS
 startBtnNode.addEventListener("click", startGame);
