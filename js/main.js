@@ -63,7 +63,7 @@ function startGame() {
   canSkaterCrouch = true;
   skaterCrashed = false;
   skateboardCrashed = false;
-  obstFrequency = 3000;
+  obstFrequency = 5000;
   gameSpeed = 7;
   Score = 0;
   document.getElementById("Score").innerText = "Score: " + Score;
@@ -248,7 +248,7 @@ function restartGame() {
 function levelUp() {
   if (Score === 700) {
     showSpeedUp("blue", "darkblue");
-    
+    obstFrequency = 4000;
     gameSpeed = 9;
     setTimeout(clearInterval(obstIntervalId), 500);
     obstIntervalId = setInterval(() => {
@@ -257,7 +257,7 @@ function levelUp() {
   }
   if (Score === 1400) {
     showSpeedUp("gold", "purple");
-    
+    obstFrequency = 2000;
     gameSpeed = 12;
     setTimeout(clearInterval(obstIntervalId), 500);
     obstIntervalId = setInterval(() => {
@@ -266,7 +266,7 @@ function levelUp() {
   }
   if (Score === 2100) {
     showSpeedUp("darkred", "pink");
-    
+    obstFrequency = 1500;
     gameSpeed = 15;
     setTimeout(clearInterval(obstIntervalId), 500);
     obstIntervalId = setInterval(() => {
