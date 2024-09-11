@@ -92,6 +92,7 @@ function gameLoop() {
   obstArr.forEach((obst) => {
     if (obst.type === "rail") {
       skater.checkLeaveRail(obst);
+      skateboard.checkLeaveRail(obst);
     }
   });
 
@@ -165,11 +166,10 @@ function checkSkaterCollision() {
       skater.y < eachObst.y + eachObst.h &&
       skater.y + skater.h > eachObst.y
     ) {
-      if (eachObst.type === "rail" && skater.y + skater.h <= eachObst.y + 15) {
-        
+      if (eachObst.type === "rail" && skater.y + skater.h <= eachObst.y + 10) {
         skater.startGrinding(eachObst);
+        skateboard.startGrinding(eachObst);
       } else {
-        
         skaterCrashed = true;
         disableBtns();
       }
@@ -178,15 +178,19 @@ function checkSkaterCollision() {
       skateboard.x + skateboard.w > eachObst.x &&
       skateboard.y < eachObst.y + eachObst.h &&
       skateboard.y + skateboard.h > eachObst.y
-    ) {if (eachObst.type === "rail" && skateboard.y + skateboard.h <= eachObst.y + 10) {
-      
-      skateboard.startGrinding(eachObst);
-    } else {
-      skateboardCrashed = true;
-    }
+    ) {
+      if (
+        eachObst.type === "rail" &&
+        skateboard.y + skateboard.h <= eachObst.y + 10
+      ) {
+        skater.startGrinding(eachObst);
+
+        skateboard.startGrinding(eachObst);
+      } else {
+        skateboardCrashed = true;
+      }
     }
   });
-  
 }
 
 function gameOver() {

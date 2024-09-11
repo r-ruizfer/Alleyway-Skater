@@ -14,7 +14,6 @@ class Skater {
     this.skaterLongJumping = false;
     this.skaterCrouching = false;
     this.skaterGrinding = false;
-    
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -28,9 +27,7 @@ class Skater {
     this.node.style.left = `${this.x}px`;
   }
   fallDown() {
-    if (
-      skaterCrashed === false &&
-      this.skaterGrinding === false) {
+    if (skaterCrashed === false && this.skaterGrinding === false) {
       if (this.skaterJumping || this.skaterLongJumping) {
         this.jumpSpeed += fallSpeed;
         this.y += this.jumpSpeed;
@@ -52,30 +49,32 @@ class Skater {
   }
 
   startGrinding(rail) {
+    this.node.src = "./images/Skater-Grinding.png";
     this.skaterGrinding = true;
-    this.y = rail.y - this.h; 
+    this.y = rail.y - this.h;
     this.node.style.top = `${this.y}px`;
     this.jumpSpeed = 0;
   }
   checkLeaveRail(rail) {
-    if (this.skaterGrinding && this.x > rail.x + rail.w) { // Si el skater supera el borde derecho del rail
+    if (this.skaterGrinding && this.x > rail.x + rail.w) {
+      // Si el skater supera el borde derecho del rail
       this.stopGrinding();
     }
   }
 
   stopGrinding() {
     this.skaterGrinding = false;
-    
-      }
+    this.node.src = "./images/Skater.png";
+  }
 
   jump(type) {
     if (this.skaterJumping === false && this.skaterLongJumping === false) {
       if (type === "short") {
-                this.jumpSpeed = jumpMomentum;
+        this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
         this.node.style.top = `${this.y}px`;
       } else if (type === "long") {
-                this.jumpSpeed = jumpMomentum * 1.5;
+        this.jumpSpeed = jumpMomentum * 1.5;
         this.skaterLongJumping = true;
         this.node.style.top = `${this.y}px`;
       }
@@ -95,7 +94,6 @@ class Skater {
       this.y = 300;
       this.node.style.top = `${this.y}px`;
       this.skaterCrouching = true;
-      
     }
   }
 
@@ -108,13 +106,12 @@ class Skater {
       this.y = 250;
       this.node.style.top = `${this.y}px`;
       this.skaterCrouching = false;
-      
     }
   }
   automaticMovement() {
     if (skaterCrashed === true) {
       this.node.src = "./images/skater-crashed.png";
-      
+
       this.x -= gameSpeed;
       this.node.style.left = `${this.x}px`;
     }

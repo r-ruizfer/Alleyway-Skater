@@ -41,20 +41,21 @@ class Skateboard {
   }
 
   startGrinding(rail) {
-    this.skaterGrinding = true;
+    this.node.src = "./images/skateboard-grinding.png";
+    this.skateboardGrinding = true;
     this.y = rail.y - this.h;
     this.node.style.top = `${this.y}px`;
     this.jumpSpeed = 0;
   }
   checkLeaveRail(rail) {
-    if (this.skaterGrinding && this.x > rail.x + rail.w) {
-      // Si el skater supera el borde derecho del rail
+    if (this.skateboardGrinding && this.x > rail.x + rail.w) {
       this.stopGrinding();
     }
   }
 
   stopGrinding() {
-    this.skaterGrinding = false;
+    this.skateboardGrinding = false;
+    this.node.src = "./images/Skateboard.png";
   }
   skateboardGrounded() {
     this.canItJump = false;

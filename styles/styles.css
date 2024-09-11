@@ -59,7 +59,7 @@ h1 {
   margin-top: 40px;
   border-radius: 10px;
 }
-#Score{
+#Score {
   font-family: "Retro-Gaming";
   background-color: greenyellow;
   color: darkcyan;
@@ -68,9 +68,8 @@ h1 {
   margin-top: 40px;
   border-radius: 10px;
   transition: color 2s ease, background-color 2s ease;
-  
 }
-#HiScore{
+#HiScore {
   font-family: "Retro-Gaming";
   background-color: greenyellow;
   color: darkcyan;
