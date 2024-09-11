@@ -23,8 +23,8 @@ class Skateboard {
     this.node.style.left = `${this.x}px`;
   }
   fallDownSkate() {
-    if (skateboardCrashed === false && this.skateboardGrinding === false) {
-      if (this.skateJumping === true) {
+    if (skateboardCrashed === false) {
+      if (this.skateJumping === true && this.skateboardGrinding === false) {
         this.canItJump = false;
         this.jumpSpeed += skateFallSpeed;
         this.y += this.jumpSpeed;
@@ -70,8 +70,10 @@ class Skateboard {
       this.canItJump === true &&
       skater.skaterLongJumping === false
     ) {
+      
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
+      this.skateboardGrinding = false
       this.node.style.top = `${this.y}px`;
     }
   }

@@ -27,8 +27,11 @@ class Skater {
     this.node.style.left = `${this.x}px`;
   }
   fallDown() {
-    if (skaterCrashed === false && this.skaterGrinding === false) {
-      if (this.skaterJumping || this.skaterLongJumping) {
+    if (skaterCrashed === false) {
+      if (
+        (this.skaterJumping || this.skaterLongJumping) &&
+        this.skaterGrinding === false
+      ) {
         this.jumpSpeed += fallSpeed;
         this.y += this.jumpSpeed;
         this.node.style.top = `${this.y}px`;
@@ -70,12 +73,15 @@ class Skater {
   jump(type) {
     if (this.skaterJumping === false && this.skaterLongJumping === false) {
       if (type === "short") {
+        
         this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
+        this.skaterGrinding = false;
         this.node.style.top = `${this.y}px`;
       } else if (type === "long") {
         this.jumpSpeed = jumpMomentum * 1.5;
         this.skaterLongJumping = true;
+        this.skaterGrinding = false;
         this.node.style.top = `${this.y}px`;
       }
     }
