@@ -11,9 +11,10 @@ class Skater {
     this.jumpSpeed = 0;
 
     this.skaterJumping = false;
-    this.skaterLongJumping = false
+    this.skaterLongJumping = false;
     this.skaterCrouching = false;
     this.skaterGrinding = false;
+    
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -27,7 +28,9 @@ class Skater {
     this.node.style.left = `${this.x}px`;
   }
   fallDown() {
-    if (skaterCrashed === false && this.skaterGrinding === false) {
+    if (
+      skaterCrashed === false &&
+      this.skaterGrinding === false) {
       if (this.skaterJumping || this.skaterLongJumping) {
         this.jumpSpeed += fallSpeed;
         this.y += this.jumpSpeed;
@@ -35,38 +38,44 @@ class Skater {
       }
       if (this.skaterCrouching === true) {
         this.y = 300;
+
+        this.skaterJumping = false;
+        this.skaterLongJumping = false;
       } else if (this.y >= 250) {
         this.y = 250;
+
         this.jumpSpeed = 0;
         this.skaterJumping = false;
-        this.skaterLongJumping = false
+        this.skaterLongJumping = false;
       }
     }
   }
 
-  startGrinding() {
-    
+  startGrinding(rail) {
     this.skaterGrinding = true;
-    this.jumpSpeed = 0;
-    this.skaterJumping = false;
-    this.y = 195;
+    this.y = rail.y - this.h; 
     this.node.style.top = `${this.y}px`;
+    this.jumpSpeed = 0;
+  }
+  checkLeaveRail(rail) {
+    if (this.skaterGrinding && this.x > rail.x + rail.w) { // Si el skater supera el borde derecho del rail
+      this.stopGrinding();
+    }
   }
 
   stopGrinding() {
     this.skaterGrinding = false;
     
-  }
+      }
 
   jump(type) {
     if (this.skaterJumping === false && this.skaterLongJumping === false) {
       if (type === "short") {
-        this.jumpSpeed = jumpMomentum;
+                this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
         this.node.style.top = `${this.y}px`;
       } else if (type === "long") {
-        
-        this.jumpSpeed = jumpMomentum * 1.5;
+                this.jumpSpeed = jumpMomentum * 1.5;
         this.skaterLongJumping = true;
         this.node.style.top = `${this.y}px`;
       }
@@ -74,7 +83,11 @@ class Skater {
   }
 
   crouch() {
-    if (this.skaterCrouching === false && this.skaterJumping === false && this.skaterLongJumping === false) {
+    if (
+      this.skaterCrouching === false &&
+      this.skaterJumping === false &&
+      this.skaterLongJumping === false
+    ) {
       this.node.src = "./images/Skater-crouching.png";
 
       this.h = 50;
@@ -82,6 +95,7 @@ class Skater {
       this.y = 300;
       this.node.style.top = `${this.y}px`;
       this.skaterCrouching = true;
+      
     }
   }
 
@@ -94,11 +108,13 @@ class Skater {
       this.y = 250;
       this.node.style.top = `${this.y}px`;
       this.skaterCrouching = false;
+      
     }
   }
   automaticMovement() {
     if (skaterCrashed === true) {
       this.node.src = "./images/skater-crashed.png";
+      
       this.x -= gameSpeed;
       this.node.style.left = `${this.x}px`;
     }

@@ -4,6 +4,7 @@ class Rail {
     this.y = 310;
     this.w = 500;
     this.h = 75;
+    this.type = "rail"
 
     this.node = document.createElement("img");
     this.node.src = "./images/obstacle-rail.png";

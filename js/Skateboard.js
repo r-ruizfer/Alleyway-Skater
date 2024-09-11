@@ -3,7 +3,6 @@ let skateFallSpeed = fallSpeed;
 
 class Skateboard {
   constructor() {
-    // .todos los pollitos se crearán con estos valores
     this.x = 70;
     this.y = 350;
     this.h = 20;
@@ -11,8 +10,7 @@ class Skateboard {
     this.jumpSpeed = 0;
     this.skateJumping = false;
     this.skateboardGrinding = false;
-    this.canItJump = true
-
+    this.canItJump = true;
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
     this.node.src = "./images/Skateboard.png";
@@ -27,7 +25,7 @@ class Skateboard {
   fallDownSkate() {
     if (skateboardCrashed === false && this.skateboardGrinding === false) {
       if (this.skateJumping === true) {
-        this.canItJump = false
+        this.canItJump = false;
         this.jumpSpeed += skateFallSpeed;
         this.y += this.jumpSpeed;
 
@@ -37,43 +35,48 @@ class Skateboard {
         this.y = 350;
         this.jumpSpeed = 0;
         this.skateJumping = false;
-        this.canItJump = true
-
+        this.canItJump = true;
       }
     }
   }
 
-  startGrinding() {
-    
-    this.skateboardGrinding = true;
-    this.jumpSpeed = 0;
-    this.skateJumping = false;
-    this.y = 290;
+  startGrinding(rail) {
+    this.skaterGrinding = true;
+    this.y = rail.y - this.h;
     this.node.style.top = `${this.y}px`;
+    this.jumpSpeed = 0;
+  }
+  checkLeaveRail(rail) {
+    if (this.skaterGrinding && this.x > rail.x + rail.w) {
+      // Si el skater supera el borde derecho del rail
+      this.stopGrinding();
+    }
   }
 
   stopGrinding() {
-    this.skateboardGrinding = false;
-    
+    this.skaterGrinding = false;
   }
-  skateboardGrounded(){
-    this.canItJump = false
+  skateboardGrounded() {
+    this.canItJump = false;
   }
-  skateboardUnGrounded(){
-    this.canItJump = true
+  skateboardUnGrounded() {
+    this.canItJump = true;
   }
 
   jump() {
-    if (this.skateJumping === false && this.canItJump === true && skater.skaterLongJumping === false)  {
+    if (
+      this.skateJumping === false &&
+      this.canItJump === true &&
+      skater.skaterLongJumping === false
+    ) {
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
-
       this.node.style.top = `${this.y}px`;
     }
   }
   lostSkate() {
     if (skateboardCrashed === true) {
-      this.canItJump = false
+      this.canItJump = false;
       this.node.src = "./images/Skateboard-lost.png";
       this.x -= gameSpeed;
       this.node.style.left = `${this.x}px`;

@@ -32,9 +32,10 @@ let gameSpeed;
 // Game Objects
 let skater;
 let skateboard;
+let rail;
 
 let obstArr = [];
-let obstArr2 = [];
+
 let obstFrequency = 0;
 
 // Game Intervals
@@ -58,6 +59,7 @@ function startGame() {
 
   skater = new Skater();
   skateboard = new Skateboard();
+  rail = new Rail();
 
   canItJump = true;
   canSkaterCrouch = true;
@@ -80,14 +82,19 @@ function startGame() {
   }, obstFrequency);
 }
 function gameLoop() {
-  obstArr.forEach((eachObst) => {
-    eachObst.automaticMovement();
+  obstArr.forEach((obst) => {
+    obst.automaticMovement();
   });
-  obstArr2.forEach((eachObst) => {
-    eachObst.automaticMovement();
-  });
+
   checkIfObstLeft();
-  checkSkaterObstacleColision();
+
+  checkSkaterCollision();
+  obstArr.forEach((obst) => {
+    if (obst.type === "rail") {
+      skater.checkLeaveRail(obst);
+    }
+  });
+
   skateboard.fallDownSkate();
   skater.fallDown();
 
@@ -107,7 +114,7 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function addObst() {
-  let randomNumber = getRandomNumber(1, 3);
+  let randomNumber = getRandomNumber(1, 4);
   if (randomNumber === 1) {
     let newObstBot = new Obstaculo("manhole");
     obstArr.push(newObstBot);
@@ -118,17 +125,15 @@ function addObst() {
     let newObstTop = new Obstaculo("tunel");
     obstArr.push(newObstTop);
   } else if (randomNumber === 4) {
-    let newObstBot2 = new Obstaculo("rail");
-    obstArr2.push(newObstBot2);
+    let newRail = new Rail();
+    obstArr.push(newRail);
   }
 }
 function checkIfObstLeft() {
   if (obstArr.length === 0) {
     return;
   }
-  /*if (obstArr2.length === 0) {
-    return;
-  }*/
+
   if (obstArr[0].x + obstArr[0].w <= 0) {
     obstArr[0].node.remove();
     obstArr.shift();
@@ -136,86 +141,59 @@ function checkIfObstLeft() {
     document.getElementById("Score").innerText = "Score: " + Score;
     console.log(Score);
     levelUp();
-  } /*else if (obstArr2[0].x + obstArr2[0].w <= 0) {
-    obstArr2[0].node.remove();
-    obstArr2.shift();
+  }
+}
+function checkIfRailLeft() {
+  if (railArray.length === 0) {
+    return;
+  }
+  if (railArray[0].x + railArray[0].w <= 0) {
+    railArray[0].node.remove();
+    railArray.shift();
     Score += 100;
     document.getElementById("Score").innerText = "Score: " + Score;
     console.log(Score);
     levelUp();
-  }*/
+  }
 }
-function checkSkaterObstacleColision() {
+
+function checkSkaterCollision() {
   obstArr.forEach((eachObst) => {
-    
-      if (
-        skater.x < eachObst.x + eachObst.w &&
-        skater.x + skater.w > eachObst.x &&
-        skater.y < eachObst.y + eachObst.h &&
-        skater.y + skater.h > eachObst.y
-      ) {
-        skaterCrashed = true;
-        disableBtns();
-      } else if (
-        skateboard.x < eachObst.x + eachObst.w &&
-        skateboard.x + skateboard.w > eachObst.x &&
-        skateboard.y < eachObst.y + eachObst.h &&
-        skateboard.y + skateboard.h > eachObst.y
-      ) {
-        skateboardCrashed = true;
-      }
-     /*else if (eachObst in newObstBot2 === true) {
-      if (
-        skater.x < eachObst.x + eachObst.w &&
-        skater.x + skater.w > eachObst.x &&
-        skater.y < eachObst.y + eachObst.h &&
-        skater.y + skater.h > eachObst.y
-      ) {
-        skaterCrashed = true;
-        disableBtns();
-      } else if (
-        skateboard.x < eachObst.x + eachObst.w &&
-        skateboard.x + skateboard.w > eachObst.x &&
-        skateboard.y < eachObst.y + eachObst.h &&
-        skateboard.y + skateboard.h > eachObst.y
-      ) {
-        skater.startGrinding();
-        skateboard.startGrinding();
-      } else {
-        skater.stopGrinding();
-        skateboard.stopGrinding();
-      }
-    }
-  )};
-  /*obstArr2.forEach((eachObst) => {
     if (
+      skater.x < eachObst.x + eachObst.w &&
+      skater.x + skater.w > eachObst.x &&
+      skater.y < eachObst.y + eachObst.h &&
+      skater.y + skater.h > eachObst.y
+    ) {
+      if (eachObst.type === "rail" && skater.y + skater.h <= eachObst.y + 15) {
+        
+        skater.startGrinding(eachObst);
+      } else {
+        
+        skaterCrashed = true;
+        disableBtns();
+      }
+    } else if (
       skateboard.x < eachObst.x + eachObst.w &&
       skateboard.x + skateboard.w > eachObst.x &&
       skateboard.y < eachObst.y + eachObst.h &&
       skateboard.y + skateboard.h > eachObst.y
-    ) {
-      if (skater.skaterJumping === true && skateboard.skateJumping === true) {
-        skater.startGrinding();
-        skateboard.startGrinding();
-      } else if (
-        (skater.skaterGrinding === false && skater.skaterJumping === false) ||
-        (skateboard.skateJumping === false &&
-          skateboard.skateboardGrinding === false)
-      ) {
-        skaterCrashed = true;
-      }
+    ) {if (eachObst.type === "rail" && skateboard.y + skateboard.h <= eachObst.y + 10) {
+      
+      skateboard.startGrinding(eachObst);
     } else {
-      skater.skaterJumping = true;
-      skateboard.skateJumping = true;
-      skater.stopGrinding();
-      skateboard.stopGrinding();
-    }*/
+      skateboardCrashed = true;
+    }
+    }
   });
+  
 }
+
 function gameOver() {
   skater = null;
   skateboard = null;
   obstArr = [];
+  railArray = [];
   clearInterval(gameIntervalId);
   clearInterval(obstIntervalId);
   gameScreenNode.style.display = "none";
@@ -309,8 +287,13 @@ window.addEventListener("keypress", (event) => {
 });
 
 window.addEventListener("keydown", (event) => {
-  if (canSkaterCrouch === true) {
+  if (
+    canSkaterCrouch === true &&
+    skater.skaterJumping === false &&
+    skater.skaterLongJumping === false
+  ) {
     if (event.key === "c") {
+      skater.canItFall = false;
       canItJump = false;
       skater.crouch();
     }
@@ -318,6 +301,7 @@ window.addEventListener("keydown", (event) => {
 });
 window.addEventListener("keyup", (event) => {
   if (event.key === "c") {
+    skater.canItFall = true;
     canItJump = true;
     skater.uncrouch();
   }
