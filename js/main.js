@@ -32,7 +32,6 @@ let gameSpeed;
 // Game Objects
 let skater;
 let skateboard;
-let rail;
 
 let obstArr = [];
 
@@ -59,7 +58,7 @@ function startGame() {
 
   skater = new Skater();
   skateboard = new Skateboard();
-  rail = new Rail();
+  
 
   canItJump = true;
   canSkaterCrouch = true;

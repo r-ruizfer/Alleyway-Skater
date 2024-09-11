@@ -22,6 +22,7 @@ class Skateboard {
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
   }
+  //GRAVITY
   fallDownSkate() {
     if (skateboardCrashed === false) {
       if (this.skateJumping === true && this.skateboardGrinding === false) {
@@ -39,7 +40,7 @@ class Skateboard {
       }
     }
   }
-
+  // GRINDING MECHANICS
   startGrinding(rail) {
     this.node.src = "./images/skateboard-grinding.png";
     this.skateboardGrinding = true;
@@ -57,6 +58,8 @@ class Skateboard {
     this.skateboardGrinding = false;
     this.node.src = "./images/Skateboard.png";
   }
+
+  //JUMPING MECHANICS
   skateboardGrounded() {
     this.canItJump = false;
   }
@@ -70,13 +73,14 @@ class Skateboard {
       this.canItJump === true &&
       skater.skaterLongJumping === false
     ) {
-      
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
-      this.skateboardGrinding = false
+      this.skateboardGrinding = false;
       this.node.style.top = `${this.y}px`;
     }
   }
+
+  // SKATE CRASHED :(
   lostSkate() {
     if (skateboardCrashed === true) {
       this.canItJump = false;
