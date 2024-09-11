@@ -11,6 +11,7 @@ class Skater {
     this.jumpSpeed = 0;
 
     this.skaterJumping = false;
+    this.skaterLongJumping = false
     this.skaterCrouching = false;
     this.skaterGrinding = false;
 
@@ -27,7 +28,7 @@ class Skater {
   }
   fallDown() {
     if (skaterCrashed === false && this.skaterGrinding === false) {
-      if (this.skaterJumping) {
+      if (this.skaterJumping || this.skaterLongJumping) {
         this.jumpSpeed += fallSpeed;
         this.y += this.jumpSpeed;
         this.node.style.top = `${this.y}px`;
@@ -38,12 +39,13 @@ class Skater {
         this.y = 250;
         this.jumpSpeed = 0;
         this.skaterJumping = false;
+        this.skaterLongJumping = false
       }
     }
   }
 
   startGrinding() {
-    skaterCrashed = false;
+    
     this.skaterGrinding = true;
     this.jumpSpeed = 0;
     this.skaterJumping = false;
@@ -57,21 +59,22 @@ class Skater {
   }
 
   jump(type) {
-    if (this.skaterJumping === false) {
+    if (this.skaterJumping === false && this.skaterLongJumping === false) {
       if (type === "short") {
         this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
         this.node.style.top = `${this.y}px`;
       } else if (type === "long") {
+        
         this.jumpSpeed = jumpMomentum * 1.5;
-        this.skaterJumping = true;
+        this.skaterLongJumping = true;
         this.node.style.top = `${this.y}px`;
       }
     }
   }
 
   crouch() {
-    if (this.skaterCrouching === false && this.skaterJumping === false) {
+    if (this.skaterCrouching === false && this.skaterJumping === false && this.skaterLongJumping === false) {
       this.node.src = "./images/Skater-crouching.png";
 
       this.h = 50;

@@ -63,7 +63,7 @@ function startGame() {
   canSkaterCrouch = true;
   skaterCrashed = false;
   skateboardCrashed = false;
-  obstFrequency = 6000;
+  obstFrequency = 3000;
   gameSpeed = 7;
   Score = 0;
   document.getElementById("Score").innerText = "Score: " + Score;
@@ -118,7 +118,7 @@ function addObst() {
     let newObstTop = new Obstaculo("tunel");
     obstArr.push(newObstTop);
   } else if (randomNumber === 4) {
-    let newObstBot2 = new Rail();
+    let newObstBot2 = new Obstaculo("rail");
     obstArr2.push(newObstBot2);
   }
 }
@@ -129,7 +129,7 @@ function checkIfObstLeft() {
   /*if (obstArr2.length === 0) {
     return;
   }*/
-  if (obstArr[0].x + obstArr[0].w <= 0 ) {
+  if (obstArr[0].x + obstArr[0].w <= 0) {
     obstArr[0].node.remove();
     obstArr.shift();
     Score += 100;
@@ -147,23 +147,46 @@ function checkIfObstLeft() {
 }
 function checkSkaterObstacleColision() {
   obstArr.forEach((eachObst) => {
-    if (
-      skater.x < eachObst.x + eachObst.w &&
-      skater.x + skater.w > eachObst.x &&
-      skater.y < eachObst.y + eachObst.h &&
-      skater.y + skater.h > eachObst.y
-    ) {
-      skaterCrashed = true;
-      disableBtns();
-    } else if (
-      skateboard.x < eachObst.x + eachObst.w &&
-      skateboard.x + skateboard.w > eachObst.x &&
-      skateboard.y < eachObst.y + eachObst.h &&
-      skateboard.y + skateboard.h > eachObst.y
-    ) {
-      skateboardCrashed = true;
+    
+      if (
+        skater.x < eachObst.x + eachObst.w &&
+        skater.x + skater.w > eachObst.x &&
+        skater.y < eachObst.y + eachObst.h &&
+        skater.y + skater.h > eachObst.y
+      ) {
+        skaterCrashed = true;
+        disableBtns();
+      } else if (
+        skateboard.x < eachObst.x + eachObst.w &&
+        skateboard.x + skateboard.w > eachObst.x &&
+        skateboard.y < eachObst.y + eachObst.h &&
+        skateboard.y + skateboard.h > eachObst.y
+      ) {
+        skateboardCrashed = true;
+      }
+     /*else if (eachObst in newObstBot2 === true) {
+      if (
+        skater.x < eachObst.x + eachObst.w &&
+        skater.x + skater.w > eachObst.x &&
+        skater.y < eachObst.y + eachObst.h &&
+        skater.y + skater.h > eachObst.y
+      ) {
+        skaterCrashed = true;
+        disableBtns();
+      } else if (
+        skateboard.x < eachObst.x + eachObst.w &&
+        skateboard.x + skateboard.w > eachObst.x &&
+        skateboard.y < eachObst.y + eachObst.h &&
+        skateboard.y + skateboard.h > eachObst.y
+      ) {
+        skater.startGrinding();
+        skateboard.startGrinding();
+      } else {
+        skater.stopGrinding();
+        skateboard.stopGrinding();
+      }
     }
-  });
+  )};
   /*obstArr2.forEach((eachObst) => {
     if (
       skateboard.x < eachObst.x + eachObst.w &&
@@ -186,8 +209,8 @@ function checkSkaterObstacleColision() {
       skateboard.skateJumping = true;
       skater.stopGrinding();
       skateboard.stopGrinding();
-    }
-  });*/
+    }*/
+  });
 }
 function gameOver() {
   skater = null;
@@ -225,7 +248,7 @@ function restartGame() {
 function levelUp() {
   if (Score === 700) {
     showSpeedUp("blue", "darkblue");
-    obstFrequency = 4000;
+    
     gameSpeed = 9;
     setTimeout(clearInterval(obstIntervalId), 500);
     obstIntervalId = setInterval(() => {
@@ -234,7 +257,7 @@ function levelUp() {
   }
   if (Score === 1400) {
     showSpeedUp("gold", "purple");
-    obstFrequency = 2000;
+    
     gameSpeed = 12;
     setTimeout(clearInterval(obstIntervalId), 500);
     obstIntervalId = setInterval(() => {
@@ -243,7 +266,7 @@ function levelUp() {
   }
   if (Score === 2100) {
     showSpeedUp("darkred", "pink");
-    obstFrequency = 500;
+    
     gameSpeed = 15;
     setTimeout(clearInterval(obstIntervalId), 500);
     obstIntervalId = setInterval(() => {
@@ -288,12 +311,14 @@ window.addEventListener("keypress", (event) => {
 window.addEventListener("keydown", (event) => {
   if (canSkaterCrouch === true) {
     if (event.key === "c") {
+      canItJump = false;
       skater.crouch();
     }
   }
 });
 window.addEventListener("keyup", (event) => {
   if (event.key === "c") {
+    canItJump = true;
     skater.uncrouch();
   }
 });

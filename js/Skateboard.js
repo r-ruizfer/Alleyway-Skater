@@ -11,6 +11,7 @@ class Skateboard {
     this.jumpSpeed = 0;
     this.skateJumping = false;
     this.skateboardGrinding = false;
+    this.canItJump = true
 
     // 1. añadir Skater al DOM
     this.node = document.createElement("img");
@@ -26,6 +27,7 @@ class Skateboard {
   fallDownSkate() {
     if (skateboardCrashed === false && this.skateboardGrinding === false) {
       if (this.skateJumping === true) {
+        this.canItJump = false
         this.jumpSpeed += skateFallSpeed;
         this.y += this.jumpSpeed;
 
@@ -35,12 +37,14 @@ class Skateboard {
         this.y = 350;
         this.jumpSpeed = 0;
         this.skateJumping = false;
+        this.canItJump = true
+
       }
     }
   }
 
   startGrinding() {
-    skateboardCrashed = false;
+    
     this.skateboardGrinding = true;
     this.jumpSpeed = 0;
     this.skateJumping = false;
@@ -52,16 +56,24 @@ class Skateboard {
     this.skateboardGrinding = false;
     
   }
+  skateboardGrounded(){
+    this.canItJump = false
+  }
+  skateboardUnGrounded(){
+    this.canItJump = true
+  }
 
   jump() {
-    if (this.skateJumping === false) {
+    if (this.skateJumping === false && this.canItJump === true && skater.skaterLongJumping === false)  {
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
+
       this.node.style.top = `${this.y}px`;
     }
   }
   lostSkate() {
     if (skateboardCrashed === true) {
+      this.canItJump = false
       this.node.src = "./images/Skateboard-lost.png";
       this.x -= gameSpeed;
       this.node.style.left = `${this.x}px`;
