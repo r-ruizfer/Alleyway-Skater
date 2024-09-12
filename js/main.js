@@ -16,11 +16,25 @@ const scoreDisplay = document.getElementById("Score");
 const hiScoreDisplay = document.getElementById("HiScore");
 
 function originalColor() {
-  scoreDisplay.style.color = "darkcyan";
-  scoreDisplay.style.backgroundColor = "greenyellow";
-  hiScoreDisplay.style.color = "darkcyan";
-  hiScoreDisplay.style.backgroundColor = "greenyellow";
+  scoreDisplay.style.color = "gold";
+  scoreDisplay.style.backgroundColor = "purple";
+  hiScoreDisplay.style.color = "gold";
+  hiScoreDisplay.style.backgroundColor = "purple";
 }
+
+// sonidos
+const grindingSound = new Audio("./sounds/Skate-Grinding.mp3");
+grindingSound.volume = 0.1;
+const landingSound = new Audio("./sounds/Skate-Landing.mp3");
+landingSound.volume = 0.1;
+const rollingSound = new Audio("./sounds/Skate-Rolling.mp3");
+rollingSound.volume = 0.1;
+const backgroungSirens = new Audio(
+  "./sounds/police-siren-one-loop-loop-able-104019.mp3"
+);
+backgroungSirens.volume = 0.025;
+const crashSound = new Audio('./sounds/punch-2-123106.mp3')
+crashSound.volume= 0.1
 
 //* VARIABLES GLOBALES DEL JUEGO
 let canItJump;
@@ -58,7 +72,6 @@ function startGame() {
 
   skater = new Skater();
   skateboard = new Skateboard();
-  
 
   canItJump = true;
   canSkaterCrouch = true;
@@ -68,6 +81,9 @@ function startGame() {
   gameSpeed = 7;
   Score = 0;
   document.getElementById("Score").innerText = "Score: " + Score;
+  backgroungSirens.currentTime = 0;
+  backgroungSirens.play();
+  backgroungSirens.loop = true
 
   originalColor();
 
@@ -168,9 +184,13 @@ function checkSkaterCollision() {
       if (eachObst.type === "rail" && skater.y + skater.h <= eachObst.y + 10) {
         skater.startGrinding(eachObst);
         skateboard.startGrinding(eachObst);
-      } else {
+      } else {      
+        crashSound.currentTime = 0.2
+  
+        crashSound.play()
         skaterCrashed = true;
         disableBtns();
+        
       }
     } else if (
       skateboard.x < eachObst.x + eachObst.w &&
@@ -201,15 +221,20 @@ function gameOver() {
   clearInterval(obstIntervalId);
   gameScreenNode.style.display = "none";
   gameOverScreenNode.style.display = "flex";
+  
 
   document.getElementById("finalScore").innerText = "Score: " + Score;
 
   if (hiScore < Score) {
     hiScore = Score;
-    document.getElementById("HiScore").innerText = "Hi-Score: " + hiScore;
+   document.getElementById("HiScore").innerText = "Hi-Score: " + hiScore;
 
     document.getElementById("finalHiScore").innerText = "Hi-Score: " + hiScore;
   }
+  rollingSound.pause();
+  backgroungSirens.loop = false
+  backgroungSirens.stop();
+  backgroungSirens.currentTime = 0;
 }
 function disableBtns() {
   canItJump = false;
@@ -237,7 +262,7 @@ function levelUp() {
     }, obstFrequency);
   }
   if (Score === 1400) {
-    showSpeedUp("gold", "purple");
+    showSpeedUp("darkcyan", "greenyellow");
     obstFrequency = 2000;
     gameSpeed = 12;
     setTimeout(clearInterval(obstIntervalId), 500);
