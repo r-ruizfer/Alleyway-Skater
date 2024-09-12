@@ -41,8 +41,11 @@ const skateboardBreakingSound = new Audio(
   "./sounds/wood-crate-destory-2-97263.mp3"
 );
 skateboardBreakingSound.volume = 0.1;
-const gameOverMusic = new Audio('./sounds/game-over-music.mp3')
-gameOverMusic.volume = 0.1
+const gameOverMusic = new Audio("./sounds/game-over-music.mp3");
+gameOverMusic.volume = 0.1;
+const splashScreenBGM = new Audio("./sounds/Humming The Bassline (1).mp3");
+splashScreenBGM.volume = 0.1;
+splashScreenBGM.play();
 
 //* VARIABLES GLOBALES DEL JUEGO
 let canItJump;
@@ -77,6 +80,8 @@ function startGame() {
   // 1. cambiar pantallas.
   splashScreenNode.style.display = "none";
   gameScreenNode.style.display = "flex";
+  splashScreenBGM.pause();
+  splashScreenBGM.currentTime = 0;
 
   skater = new Skater();
   skateboard = new Skateboard();
@@ -138,7 +143,7 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function addObst() {
-  let randomNumber = getRandomNumber(4, 4);
+  let randomNumber = getRandomNumber(1, 4);
   if (randomNumber === 1) {
     let newObstBot = new Obstaculo("manhole");
     obstArr.push(newObstBot);
@@ -226,9 +231,9 @@ function checkSkaterCollision() {
 }
 
 function gameOver() {
-  gameOverMusic.currentTime= 0
-  gameOverMusic.play()
-  
+  gameOverMusic.currentTime = 0;
+  gameOverMusic.play();
+
   skater = null;
   skateboard = null;
   obstArr = [];
@@ -256,8 +261,10 @@ function disableBtns() {
   canSkaterCrouch = false;
 }
 function restartGame() {
-  gameOverMusic.pause()
-  gameOverMusic.currentTime = 0
+  gameOverMusic.pause();
+  gameOverMusic.currentTime = 0;
+  splashScreenBGM.currentTime = 0;
+  splashScreenBGM.play();
   gameBoxNode.innerHTML = "";
 
   skater = null;
@@ -270,7 +277,7 @@ function restartGame() {
 }
 function levelUp() {
   if (Score === 700) {
-    showSpeedUp("blue", "darkblue");
+    showSpeedUp("skyblue", "blue");
     obstFrequency = 4000;
     gameSpeed = 9;
     setTimeout(clearInterval(obstIntervalId), 500);
