@@ -51,6 +51,7 @@ class Skater {
 
         this.jumpSpeed = 0;
         this.skaterJumping = false;
+        canItJump = true
         this.skaterLongJumping = false;
       }
     }
@@ -60,10 +61,13 @@ class Skater {
   startGrinding(rail) {
     this.node.src = "./images/Skater-Grinding.png";
     this.skaterGrinding = true;
-    
     this.y = rail.y - this.h - 7
     this.node.style.top = `${this.y}px`;
     this.jumpSpeed = 0;
+    this.skaterJumping = false
+    canItJump = true
+    this.skaterLongJumping = false
+
   }
   checkLeaveRail(rail) {
     if (this.skaterGrinding && this.x > rail.x + rail.w) {
@@ -75,6 +79,9 @@ class Skater {
   stopGrinding() {
     this.skaterGrinding = false;
     this.node.src = "./images/Skater.png";
+    this.skaterJumping = true
+    canItJump = false
+    this.skaterLongJumping = true
   }
   // JUMPS
   jump(type) {

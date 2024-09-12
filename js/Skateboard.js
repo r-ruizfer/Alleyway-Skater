@@ -8,7 +8,7 @@ class Skateboard {
     this.h = 20;
     this.w = 45;
     this.jumpSpeed = 0;
-    this.skateJumping = false;
+    this.skateboardJumping = false;
     this.skateboardGrinding = false;
     this.canItJump = true;
     // 1. añadir Skater al DOM
@@ -25,7 +25,10 @@ class Skateboard {
   //GRAVITY
   fallDownSkate() {
     if (skateboardCrashed === false) {
-      if (this.skateJumping === true && this.skateboardGrinding === false) {
+      if (
+        this.skateboardJumping === true &&
+        this.skateboardGrinding === false
+      ) {
         this.canItJump = false;
         this.jumpSpeed += skateFallSpeed;
         this.y += this.jumpSpeed;
@@ -33,16 +36,19 @@ class Skateboard {
         this.node.style.top = `${this.y}px`;
       }
       if (this.y >= 350) {
-        if (this.skateJumping || this.skateboardGrinding) {
+        if (this.skateboardJumping || this.skateboardGrinding) {
           landingSound.currentTime = 0;
           landingSound.play();
-        } else if (!this.skateJumping && !this.skateboardGrinding) {
+        } else if (!this.skateboardJumping && !this.skateboardGrinding) {
           rollingSound.play();
         }
+        this.node.src = "./images/Skateboard.png";
+
         this.y = 350;
         this.jumpSpeed = 0;
-        this.skateJumping = false;
+        this.skateboardJumping = false;
         this.canItJump = true;
+        this.skateboardJumping = false;
       }
     }
   }
@@ -53,6 +59,8 @@ class Skateboard {
     this.y = rail.y - this.h;
     this.node.style.top = `${this.y}px`;
     this.jumpSpeed = 0;
+    this.skateboardJumping = false;
+    this.canItJump = true;
 
     rollingSound.pause();
     grindingSound.currentTime = 0;
@@ -69,6 +77,8 @@ class Skateboard {
     grindingSound.pause();
     grindingSound.currentTime = 0;
     this.node.src = "./images/Skateboard.png";
+    this.skateboardJumping = true;
+    this.canItJump = false;
   }
 
   //JUMPING MECHANICS
@@ -81,13 +91,17 @@ class Skateboard {
 
   jump() {
     if (
-      this.skateJumping === false &&
+      this.skateboardJumping === false &&
       this.canItJump === true &&
       skater.skaterLongJumping === false
     ) {
+      this.node.src = "./images/Skateboard-Jumping.png";
+
       rollingSound.pause();
+      grindingSound.pause();
+      grindingSound.currentTime = 0;
       this.jumpSpeed = skateJumpMomentum;
-      this.skateJumping = true;
+      this.skateboardJumping = true;
       this.skateboardGrinding = false;
       this.node.style.top = `${this.y}px`;
     }
@@ -97,7 +111,7 @@ class Skateboard {
   lostSkate() {
     if (skateboardCrashed === true) {
       rollingSound.pause();
-      
+
       this.canItJump = false;
       this.node.src = "./images/Skateboard-lost.png";
       this.x -= gameSpeed;

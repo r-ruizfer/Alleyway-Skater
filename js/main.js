@@ -138,7 +138,7 @@ function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 function addObst() {
-  let randomNumber = getRandomNumber(1, 4);
+  let randomNumber = getRandomNumber(4, 4);
   if (randomNumber === 1) {
     let newObstBot = new Obstaculo("manhole");
     obstArr.push(newObstBot);
