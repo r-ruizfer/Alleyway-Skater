@@ -45,6 +45,8 @@ class Skateboard {
         this.node.src = "./images/Skateboard.png";
 
         this.y = 350;
+        this.node.style.top = `${this.y}px`;
+
         this.jumpSpeed = 0;
         this.skateboardJumping = false;
         this.canItJump = true;
@@ -95,7 +97,7 @@ class Skateboard {
       this.canItJump === true &&
       skater.skaterLongJumping === false
     ) {
-      this.node.src = "./images/Skateboard-Jumping.png";
+      this.node.src = "./images/SKATE-FLIP.gif";
 
       rollingSound.pause();
       grindingSound.pause();

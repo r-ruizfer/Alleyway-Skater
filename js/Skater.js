@@ -4,7 +4,7 @@ let fallSpeed = 1;
 class Skater {
   constructor() {
     this.x = 70;
-    this.y = 250;
+    this.y = 260;
     this.h = 100;
     this.w = 45;
 
@@ -39,12 +39,15 @@ class Skater {
         this.node.style.top = `${this.y}px`;
       }
       if (this.skaterCrouching === true) {
-        this.y = 300;
+        this.y = 305;
+        this.node.style.top = `${this.y}px`;
 
         this.skaterJumping = false;
         this.skaterLongJumping = false;
-      } else if (this.y >= 250) {
-        this.y = 250;
+      } else if (this.y >= 260) {
+        this.y = 260;
+        this.node.style.top = `${this.y}px`;
+
         this.node.src = "./images/Skater.png";
         this.h = 100;
         this.node.style.height = `${this.h}px`;
@@ -82,6 +85,9 @@ class Skater {
     this.skaterJumping = true
     canItJump = false
     this.skaterLongJumping = true
+    this.y = 260
+    this.node.style.top = `${this.y}px`;
+
   }
   // JUMPS
   jump(type) {
@@ -126,6 +132,9 @@ class Skater {
       this.node.style.height = `${this.h}px`;
       this.y = 300;
       this.node.style.top = `${this.y}px`;
+      this.x += 10
+      this.node.style.left = `${this.x}px`;
+
       this.skaterCrouching = true;
     }
   }
@@ -136,8 +145,10 @@ class Skater {
 
       this.h = 100;
       this.node.style.height = `${this.h}px`;
-      this.y = 250;
+      this.y = 260;
       this.node.style.top = `${this.y}px`;
+      this.x -= 10
+      this.node.style.left = `${this.x}px`;
       this.skaterCrouching = false;
     }
   }

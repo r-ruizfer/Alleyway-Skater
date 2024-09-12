@@ -5,6 +5,7 @@ const splashScreenNode = document.querySelector("#splash-screen");
 const gameScreenNode = document.querySelector("#game-screen");
 const gameOverScreenNode = document.querySelector("#game-over-screen");
 
+
 // botones
 const startBtnNode = document.querySelector("#start-btn");
 const restartBtnNode = document.querySelector("#restart-btn");
@@ -229,7 +230,11 @@ function checkSkaterCollision() {
     }
   });
 }
-
+function playGameOverVideo() {  
+  const video = document.getElementById('gameOverVideo');  
+  video.currentTime = 0;  
+  video.play();
+}
 function gameOver() {
   gameOverMusic.currentTime = 0;
   gameOverMusic.play();
@@ -242,6 +247,7 @@ function gameOver() {
   clearInterval(obstIntervalId);
   gameScreenNode.style.display = "none";
   gameOverScreenNode.style.display = "flex";
+  playGameOverVideo()
 
   document.getElementById("finalScore").innerText = "Score: " + Score;
 
