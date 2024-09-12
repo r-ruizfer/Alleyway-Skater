@@ -85,8 +85,7 @@ class Skater {
     this.skaterJumping = true
     canItJump = false
     this.skaterLongJumping = true
-    this.y = 260
-    this.node.style.top = `${this.y}px`;
+   
 
   }
   // JUMPS
