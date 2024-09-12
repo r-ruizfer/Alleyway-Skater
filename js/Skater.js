@@ -60,7 +60,8 @@ class Skater {
   startGrinding(rail) {
     this.node.src = "./images/Skater-Grinding.png";
     this.skaterGrinding = true;
-    this.y = rail.y - this.h;
+    
+    this.y = rail.y - this.h - 7
     this.node.style.top = `${this.y}px`;
     this.jumpSpeed = 0;
   }
@@ -80,13 +81,16 @@ class Skater {
     if (this.skaterJumping === false && this.skaterLongJumping === false) {
       if (type === "short") {
         this.node.src = "./images/Skater-jumping.png";
-
+        this.h = 75
         this.node.style.height = `${this.h}px`;
 
         this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
         this.skaterGrinding = false;
         this.node.style.top = `${this.y}px`;
+
+       
+
       } else if (type === "long") {
         this.node.src = "./images/Skater-longjumping.png";
         this.h = 100;
@@ -96,6 +100,9 @@ class Skater {
         this.skaterLongJumping = true;
         this.skaterGrinding = false;
         this.node.style.top = `${this.y}px`;
+        
+        longJumpSound.currentTime = 0
+        longJumpSound.play()
       }
     }
   }
@@ -129,6 +136,7 @@ class Skater {
   }
   automaticMovement() {
     if (skaterCrashed === true) {
+      this.node.classList.add ('skater-above')
       this.node.src = "./images/skater-crashed.png";
 
       this.x -= gameSpeed;

@@ -33,8 +33,16 @@ const backgroungSirens = new Audio(
   "./sounds/police-siren-one-loop-loop-able-104019.mp3"
 );
 backgroungSirens.volume = 0.025;
-const crashSound = new Audio('./sounds/punch-2-123106.mp3')
-crashSound.volume= 0.1
+const crashSound = new Audio("./sounds/punch-2-123106.mp3");
+crashSound.volume = 0.1;
+const longJumpSound = new Audio("./sounds/cartoon-jump-6462.mp3");
+longJumpSound.volume = 0.1;
+const skateboardBreakingSound = new Audio(
+  "./sounds/wood-crate-destory-2-97263.mp3"
+);
+skateboardBreakingSound.volume = 0.1;
+const gameOverMusic = new Audio('./sounds/game-over-music.mp3')
+gameOverMusic.volume = 0.1
 
 //* VARIABLES GLOBALES DEL JUEGO
 let canItJump;
@@ -83,7 +91,7 @@ function startGame() {
   document.getElementById("Score").innerText = "Score: " + Score;
   backgroungSirens.currentTime = 0;
   backgroungSirens.play();
-  backgroungSirens.loop = true
+  backgroungSirens.loop = true;
 
   originalColor();
 
@@ -174,23 +182,28 @@ function checkIfRailLeft() {
 }
 
 function checkSkaterCollision() {
+  const skaterCenterX = skater.x + skater.w / 2;
+  //const skaterCenterY = skater.y + skater.h / 2;
   obstArr.forEach((eachObst) => {
+    const obstLeft = eachObst.x;
+    const obstRight = eachObst.x + eachObst.w;
+    //const obstTop = eachObst.y;
+    //const obstBottom = eachObst.y + eachObst.h;
     if (
-      skater.x < eachObst.x + eachObst.w &&
-      skater.x + skater.w > eachObst.x &&
+      skaterCenterX >= obstLeft &&
+      skaterCenterX <= obstRight &&
       skater.y < eachObst.y + eachObst.h &&
       skater.y + skater.h > eachObst.y
     ) {
       if (eachObst.type === "rail" && skater.y + skater.h <= eachObst.y + 10) {
         skater.startGrinding(eachObst);
         skateboard.startGrinding(eachObst);
-      } else {      
-        crashSound.currentTime = 0.2
-  
-        crashSound.play()
+      } else {
+        crashSound.currentTime = 0.2;
+
+        crashSound.play();
         skaterCrashed = true;
         disableBtns();
-        
       }
     } else if (
       skateboard.x < eachObst.x + eachObst.w &&
@@ -213,6 +226,9 @@ function checkSkaterCollision() {
 }
 
 function gameOver() {
+  gameOverMusic.currentTime= 0
+  gameOverMusic.play()
+  
   skater = null;
   skateboard = null;
   obstArr = [];
@@ -221,18 +237,17 @@ function gameOver() {
   clearInterval(obstIntervalId);
   gameScreenNode.style.display = "none";
   gameOverScreenNode.style.display = "flex";
-  
 
   document.getElementById("finalScore").innerText = "Score: " + Score;
 
   if (hiScore < Score) {
     hiScore = Score;
-   document.getElementById("HiScore").innerText = "Hi-Score: " + hiScore;
+    document.getElementById("HiScore").innerText = "Hi-Score: " + hiScore;
 
     document.getElementById("finalHiScore").innerText = "Hi-Score: " + hiScore;
   }
   rollingSound.pause();
-  backgroungSirens.loop = false
+  backgroungSirens.loop = false;
   backgroungSirens.stop();
   backgroungSirens.currentTime = 0;
 }
@@ -241,6 +256,8 @@ function disableBtns() {
   canSkaterCrouch = false;
 }
 function restartGame() {
+  gameOverMusic.pause()
+  gameOverMusic.currentTime = 0
   gameBoxNode.innerHTML = "";
 
   skater = null;
@@ -305,10 +322,11 @@ restartBtnNode.addEventListener("click", restartGame);
 
 window.addEventListener("keypress", (event) => {
   if (canItJump === true) {
-    if (event.key === "z") {
+    const key = event.key.toLowerCase();
+    if (key === "z") {
       skater.jump("short");
       skateboard.jump();
-    } else if (event.key === "x") {
+    } else if (key === "x") {
       skater.jump("long");
     }
   }
@@ -320,7 +338,9 @@ window.addEventListener("keydown", (event) => {
     skater.skaterJumping === false &&
     skater.skaterLongJumping === false
   ) {
-    if (event.key === "c") {
+    const key = event.key.toLowerCase();
+
+    if (key === "c") {
       skater.canItFall = false;
       canItJump = false;
       skater.crouch();
@@ -328,7 +348,9 @@ window.addEventListener("keydown", (event) => {
   }
 });
 window.addEventListener("keyup", (event) => {
-  if (event.key === "c") {
+  const key = event.key.toLowerCase();
+
+  if (key === "c") {
     skater.canItFall = true;
     canItJump = true;
     skater.uncrouch();

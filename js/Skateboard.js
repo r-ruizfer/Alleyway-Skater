@@ -1,7 +1,6 @@
 let skateJumpMomentum = jumpMomentum;
 let skateFallSpeed = fallSpeed;
 
-
 class Skateboard {
   constructor() {
     this.x = 70;
@@ -34,15 +33,11 @@ class Skateboard {
         this.node.style.top = `${this.y}px`;
       }
       if (this.y >= 350) {
-        if (this.skateJumping ||this.skateboardGrinding){
-          landingSound.currentTime = 0
-          landingSound.play()
-          
-
-
-        } else if (!this.skateJumping && !this.skateboardGrinding){
-          rollingSound.play()
-
+        if (this.skateJumping || this.skateboardGrinding) {
+          landingSound.currentTime = 0;
+          landingSound.play();
+        } else if (!this.skateJumping && !this.skateboardGrinding) {
+          rollingSound.play();
         }
         this.y = 350;
         this.jumpSpeed = 0;
@@ -59,9 +54,9 @@ class Skateboard {
     this.node.style.top = `${this.y}px`;
     this.jumpSpeed = 0;
 
-    rollingSound.pause()
-    grindingSound.currentTime = 0
-    grindingSound.play()
+    rollingSound.pause();
+    grindingSound.currentTime = 0;
+    grindingSound.play();
   }
   checkLeaveRail(rail) {
     if (this.skateboardGrinding && this.x > rail.x + rail.w) {
@@ -71,8 +66,8 @@ class Skateboard {
 
   stopGrinding() {
     this.skateboardGrinding = false;
-    grindingSound.pause()
-    grindingSound.currentTime= 0
+    grindingSound.pause();
+    grindingSound.currentTime = 0;
     this.node.src = "./images/Skateboard.png";
   }
 
@@ -90,7 +85,7 @@ class Skateboard {
       this.canItJump === true &&
       skater.skaterLongJumping === false
     ) {
-      rollingSound.pause()
+      rollingSound.pause();
       this.jumpSpeed = skateJumpMomentum;
       this.skateJumping = true;
       this.skateboardGrinding = false;
@@ -101,11 +96,15 @@ class Skateboard {
   // SKATE CRASHED :(
   lostSkate() {
     if (skateboardCrashed === true) {
-      rollingSound.pause()
+      rollingSound.pause();
+      
       this.canItJump = false;
       this.node.src = "./images/Skateboard-lost.png";
       this.x -= gameSpeed;
       this.node.style.left = `${this.x}px`;
+      skater.node.src = "./images/skater-tripped.png";
+      skateboardBreakingSound.play();
+      skateboardBreakingSound.currentTime = 0;
     }
   }
 }
