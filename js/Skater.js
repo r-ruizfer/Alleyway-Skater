@@ -15,11 +15,11 @@ class Skater {
     this.skaterCrouching = false;
     this.skaterGrinding = false;
 
-    // 1. añadir Skater al DOM
+   
     this.node = document.createElement("img");
     this.node.src = "./images/Skater.png";
     gameBoxNode.append(this.node);
-    // 2. ajustar  dimensiones y posiciónes
+    
     this.node.style.width = `${this.w}px`;
     this.node.style.height = `${this.h}px`;
     this.node.style.position = "absolute";
@@ -73,8 +73,7 @@ class Skater {
 
   }
   checkLeaveRail(rail) {
-    if (this.skaterGrinding && this.x > rail.x + rail.w) {
-      // Si el skater supera el borde derecho del rail
+    if (this.skaterGrinding && this.x > rail.x + rail.w) {      
       this.stopGrinding();
     }
   }
@@ -85,8 +84,6 @@ class Skater {
     this.skaterJumping = true
     canItJump = false
     this.skaterLongJumping = true
-   
-
   }
   // JUMPS
   jump(type) {
@@ -99,9 +96,7 @@ class Skater {
         this.jumpSpeed = jumpMomentum;
         this.skaterJumping = true;
         this.skaterGrinding = false;
-        this.node.style.top = `${this.y}px`;
-
-       
+        this.node.style.top = `${this.y}px`;       
 
       } else if (type === "long") {
         this.node.src = "./images/skater-longjumping.png";

@@ -11,11 +11,11 @@ class Skateboard {
     this.skateboardJumping = false;
     this.skateboardGrinding = false;
     this.canItJump = true;
-    // 1. añadir Skater al DOM
+   
     this.node = document.createElement("img");
     this.node.src = "./images/Skateboard.png";
     gameBoxNode.append(this.node);
-    // 2. ajustar  dimensiones y posiciónes
+    
     this.node.style.width = `${this.w}px`;
     this.node.style.height = `${this.h}px`;
     this.node.style.position = "absolute";
@@ -98,7 +98,6 @@ class Skateboard {
       skater.skaterLongJumping === false
     ) {
       this.node.src = "./images/SKATE-FLIP.gif";
-
       rollingSound.pause();
       grindingSound.pause();
       grindingSound.currentTime = 0;

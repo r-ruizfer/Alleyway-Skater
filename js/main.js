@@ -101,7 +101,7 @@ function startGame() {
 
   originalColor();
 
-  // 3. intervalo 60 fps
+  //* INTERVALOS Y GAMELOOP
   gameIntervalId = setInterval(() => {
     gameLoop();
   }, Math.round(1000 / 60));
@@ -140,6 +140,8 @@ function gameLoop() {
     }
   }
 }
+
+//* OBSTACULOS
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -189,12 +191,10 @@ function checkIfRailLeft() {
 
 function checkSkaterCollision() {
   const skaterCenterX = skater.x + skater.w / 2;
-  //const skaterCenterY = skater.y + skater.h / 2;
+  
   obstArr.forEach((eachObst) => {
     const obstLeft = eachObst.x;
-    const obstRight = eachObst.x + eachObst.w;
-    //const obstTop = eachObst.y;
-    //const obstBottom = eachObst.y + eachObst.h;
+    const obstRight = eachObst.x + eachObst.w;    
     if (
       skaterCenterX >= obstLeft &&
       skaterCenterX <= obstRight &&
@@ -206,7 +206,6 @@ function checkSkaterCollision() {
         skateboard.startGrinding(eachObst);
       } else {
         crashSound.currentTime = 0.2;
-
         crashSound.play();
         skaterCrashed = true;
         disableBtns();
@@ -230,6 +229,8 @@ function checkSkaterCollision() {
     }
   });
 }
+
+//* GAME OVER Y RESTART
 function playGameOverVideo() {  
   const video = document.getElementById('gameOverVideo');  
   video.currentTime = 0;  
@@ -281,6 +282,8 @@ function restartGame() {
   gameOverScreenNode.style.display = "none";
   splashScreenNode.style.display = "flex";
 }
+
+//* SUBIDA DE DIFICULTAD
 function levelUp() {
   if (Score === 700) {
     showSpeedUp("skyblue", "blue");
@@ -329,6 +332,7 @@ function showSpeedUp(color, bgcolor) {
     speedUp.style.display = "none";
   }, 3000);
 }
+
 //* EVENT LISTENERS
 startBtnNode.addEventListener("click", startGame);
 restartBtnNode.addEventListener("click", restartGame);
