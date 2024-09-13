@@ -7,9 +7,9 @@ class Obstaculo {
 
     this.node = document.createElement("img");
     if (type === "manhole") {
-      this.y = 330;
+      this.y = 345;
       this.w = 75;
-      this.h = 50;
+      this.h = 25;
       this.node.src = "./images/obstacle-manhole.png";
     } else if (type === "box") {
       this.y = 220;

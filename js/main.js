@@ -312,6 +312,15 @@ function levelUp() {
       addObst();
     }, obstFrequency);
   }
+  if (Score === 2800) {
+    showSpeedUp("red", "orange");
+    obstFrequency = 1000;
+    gameSpeed = 20;
+    setTimeout(clearInterval(obstIntervalId), 500);
+    obstIntervalId = setInterval(() => {
+      addObst();
+    }, obstFrequency);
+  }
 }
 
 function showSpeedUp(color, bgcolor) {
