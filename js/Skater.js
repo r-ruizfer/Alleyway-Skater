@@ -104,7 +104,7 @@ class Skater {
        
 
       } else if (type === "long") {
-        this.node.src = "./images/Skater-longjumping.png";
+        this.node.src = "./images/skater-longjumping.png";
         this.h = 100;
         this.node.style.height = `${this.h}px`;
 
