@@ -46,12 +46,6 @@ Alleyway Skater is a game where our skater friend is fleeing the police through 
 
 # Proyect Structure
 
-- List here sections for your your different JS files.
-- One for main.js to manage DOM elements, one for the Game class and one for each other class file of your game.
-- Inside each file you can list the functions, clases, properties and methods of your code.
-
-Example:
-
 ## main.js
 - startGame()   
 - gameLoop()
@@ -133,7 +127,7 @@ Example:
 [Link](https://excalidraw.com/#json=QXSZ88d5BrAl13hcTC_m2,3LjiRoseh7w1g1-QBqIvEw)
 
 ### Slides
-[Link](www.your-slides-url-here.com)
+[Link](https://docs.google.com/presentation/d/1qf0410JYRiyarIWOhR3olQCTWodYTv9xHdp1TeE9Afw/edit?usp=sharing)
 
 ## Deploy
 [Link](https://r-ruizfer.github.io/Alleyway-Skater/)
